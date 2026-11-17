@@ -12,7 +12,7 @@ import { useTranslation } from '@hooks/useTranslation';
 import { isMotionDisabled } from '@lib/motion-level';
 import { holdPetalBurst } from '@lib/sakura/petal-burst';
 import { cn } from '@lib/utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './theme-toggle.css';
 
 /**
@@ -100,9 +100,21 @@ export default function ThemeToggle({ className, locale }: ThemeToggleProps) {
   const { isDark, toggle } = useTheme();
   const isMounted = useIsMounted();
   const label = t('common.toggleTheme');
+  const buttonRef = useRef<HTMLButtonElement & { _tippy?: { setContent(content: string): void } }>(null);
+
+  useEffect(() => {
+    const button = buttonRef.current;
+    if (!button?._tippy) return;
+
+    // Astro persists the navigation, but astro-tooltips only reads its title on initialization.
+    button._tippy.setContent(label);
+    // Keep the native title fallback only when no enhanced tooltip has been attached.
+    button.setAttribute('title', '');
+  }, [label]);
 
   return (
     <button
+      ref={buttonRef}
       className={cn(
         'theme-toggle size-10 flex-center cursor-pointer rounded-full transition-[background-color,scale] duration-200 ease-out-quart hover:bg-current/15 active:scale-90',
         className,
