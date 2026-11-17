@@ -17,6 +17,16 @@ export function getContentSite(locale: string) {
   return config[locale]?.site;
 }
 
+/** Translate the display name without changing the tag's identity or URL. */
+export function getContentTagName(locale: string, tag: string): string {
+  return config[locale]?.tags?.[tag] ?? tag;
+}
+
+/** Friend-page copy keyed by stable group IDs and site URLs. */
+export function getContentFriends(locale: string) {
+  return config[locale]?.friends;
+}
+
 /**
  * Look up a translated category name from the YAML content config.
  * Returns undefined if no translation is defined for the given locale/slug.

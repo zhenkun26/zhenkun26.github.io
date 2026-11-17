@@ -3,6 +3,7 @@ import SakuraSVG from '@components/svg/SakuraSvg';
 import { friendGroups, friendsData } from '@constants/friends-config';
 import { groupFriendLinks } from '@lib/config/friends';
 import { defaultLocale, t } from '@/i18n';
+import { getContentFriends } from '@/i18n/content';
 import FriendCard from './FriendCard.astro';
 
 interface Props {
@@ -10,11 +11,12 @@ interface Props {
 }
 
 const { locale = defaultLocale } = Astro.props;
+const copy = getContentFriends(locale);
 const grouped = friendGroups.length > 0;
 const sections = groupFriendLinks(friendsData, friendGroups).map(({ group, friends }) => ({
   id: group?.id ?? 'ungrouped',
-  title: group?.title ?? t(locale, 'friends.ungrouped'),
-  description: group?.description,
+  title: (group && copy?.groups?.[group.id]?.title) ?? group?.title ?? t(locale, 'friends.ungrouped'),
+  description: (group && copy?.groups?.[group.id]?.description) ?? group?.description,
   friends,
 }));
 ---
@@ -48,7 +50,7 @@ const sections = groupFriendLinks(friendsData, friendGroups).map(({ group, frien
           {section.description && <p class="friends-section-desc">{section.description}</p>}
           {section.friends.length > 0 ? (
             <div class="friends-grid grid">
-              {section.friends.map((friend) => <FriendCard friend={friend} />)}
+              {section.friends.map((friend) => <FriendCard friend={{ ...friend, ...copy?.sites?.[friend.url] }} />)}
             </div>
           ) : (
             <div class="friends-section-empty">
@@ -61,7 +63,7 @@ const sections = groupFriendLinks(friendsData, friendGroups).map(({ group, frien
     </>
   ) : (
     <div class="friends-grid grid">
-      {friendsData.map((friend) => <FriendCard friend={friend} />)}
+      {friendsData.map((friend) => <FriendCard friend={{ ...friend, ...copy?.sites?.[friend.url] }} />)}
     </div>
   )}
 </div>

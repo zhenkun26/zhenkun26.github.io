@@ -1,6 +1,7 @@
 ---
 import { buildTagPath } from '@lib/content/tags';
 import { localizedPath, t } from '@/i18n';
+import { getContentTagName } from '@/i18n/content';
 
 interface Props {
   tag: string;
@@ -9,7 +10,8 @@ interface Props {
   locale: string;
 }
 const { tag, count, tier, locale } = Astro.props;
+const displayName = getContentTagName(locale, tag);
 ---
-<a class="index-tag" data-tag={tag.toLowerCase()} data-tier={tier} href={localizedPath(buildTagPath(tag), locale)} aria-label={t(locale, 'tag.viewTagPosts', { tag, count })}>
-  {tag}<sup aria-hidden="true">{count}</sup>
+<a class="index-tag" data-tag={`${tag} ${displayName}`.toLowerCase()} data-tier={tier} href={localizedPath(buildTagPath(tag), locale)} aria-label={t(locale, 'tag.viewTagPosts', { tag: displayName, count })}>
+  {displayName}<sup aria-hidden="true">{count}</sup>
 </a>

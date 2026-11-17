@@ -7,6 +7,7 @@ import { cn } from '@lib/utils';
 import { Icon } from 'astro-icon/components';
 import UmamiPVSpan from '@/components/umami/UmamiPVSpan';
 import { getLocaleFromUrl, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import SakuraSVG from '../svg/SakuraSvg';
 
 interface Props {
@@ -78,7 +79,7 @@ const startYear = siteConfig?.startYear ?? currentYear;
       }
       <SakuraSVG className="mx-1 size-5 animate-spin text-[#FFC0CB] duration-10000" />
       <span class="author font-medium opacity-75" itemprop="copyrightHolder">
-        {siteConfig.name}
+        {getContentSite(locale)?.name ?? siteConfig.name}
         {siteConfig?.alternate ? `@${siteConfig.alternate}` : ''}
       </span>
     </div>

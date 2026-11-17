@@ -25,6 +25,7 @@ import { seoConfig } from '@constants/site-config';
 import LoadingIndicator from 'astro-loading-indicator/component';
 import { Tooltips } from 'astro-tooltips';
 import { getHtmlLang, getLocaleFromUrl, stripLocaleFromPath } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import AppShell from './AppShell.astro';
 import BootScripts from './BootScripts.astro';
 import HeadMeta from './HeadMeta.astro';
@@ -32,9 +33,9 @@ import HeadMeta from './HeadMeta.astro';
 import '@styles/index.css';
 
 const {
-  title = seoConfig.title,
-  description = seoConfig.description,
   locale = getLocaleFromUrl(Astro.url.pathname),
+  title = getContentSite(locale)?.title ?? seoConfig.title,
+  description = getContentSite(locale)?.description ?? seoConfig.description,
   siderType,
   articleTools = true,
   post,

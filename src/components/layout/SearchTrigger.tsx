@@ -15,9 +15,9 @@ function SearchIcon({ className }: { className?: string }) {
   );
 }
 
-export function SearchTrigger({ className }: { className?: string }) {
+export function SearchTrigger({ className, locale }: { className?: string; locale?: string }) {
   const isMounted = useIsMounted();
-  const { t } = useTranslation();
+  const { t } = useTranslation(locale);
 
   // Only compute platform-specific shortcut after mount to avoid hydration mismatch
   const title = useMemo(() => {

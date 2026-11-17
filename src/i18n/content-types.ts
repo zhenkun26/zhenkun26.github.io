@@ -18,10 +18,17 @@ export interface FeaturedCategoryContentTranslation {
 export interface LocaleContentTranslations {
   site?: {
     title?: string;
+    name?: string;
     subtitle?: string;
     description?: string;
   };
   colophon?: ColophonContentTranslation;
+  tags?: Record<string, string>;
+  friends?: {
+    groups?: Record<string, { title?: string; description?: string }>;
+    sites?: Record<string, { site?: string; desc?: string }>;
+    applyDesc?: string;
+  };
   categories?: Record<string, string>;
   series?: Record<string, SeriesContentTranslation>;
   featuredCategories?: Record<string, FeaturedCategoryContentTranslation>;

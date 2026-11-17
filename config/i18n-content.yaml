@@ -6,7 +6,9 @@
 #
 # Structure:
 #   <locale>:
-#     site:          { title?, subtitle?, description? }
+#     site:          { title?, subtitle?, name?, description? }
+#     tags:          { <original tag>: <display name> }
+#     friends:       { groups: { <id>: { title?, description? } }, sites: { <url>: { site?, desc? } }, applyDesc? }
 #     categories:    { <slug>: <translated name> }
 #     series:        { <slug>: { label?, fullName?, description? } }
 #     featuredCategories: { <link>: { label?, description? } }
@@ -16,8 +18,28 @@
 en:
   site:
     title: yuran blog
+    name: Yuzheng
     subtitle: "Where joy prevails, the record endures; where peace abides, the way unfolds."
     description: "Yuzheng's personal blog about learning, technology, and everyday life."
+  tags:
+    随笔: Essays
+    建站: Site Building
+  friends:
+    groups:
+      familiar:
+        title: Friends
+        description: Friends I know and keep in touch with.
+      community:
+        title: Blog Friends
+        description: Fellow bloggers I have connected with through our blogs.
+      following:
+        title: Blogs I Follow
+        description: Blogs I enjoy reading and recommend.
+    sites:
+      "https://blog.cosine.ren":
+        site: "cos's blog"
+        desc: Creator of the astro-koharu theme
+    applyDesc: Leave a comment on this page using the details below.
   categories:
     life: Life
     note: Notes

@@ -67,7 +67,7 @@ const categoryPosts: CategoryWithPosts[] = await Promise.all(
             <img
               style={getLqipStyle(category.image)}
               src={category.image}
-              alt={category.label}
+              alt={displayName}
               loading="lazy"
               decoding="async"
               class="absolute inset-0 -z-10 h-full w-full rounded-md object-cover"

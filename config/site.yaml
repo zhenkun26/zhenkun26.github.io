@@ -566,6 +566,7 @@ navigation:
   #   path: /music
   #   icon: ri:music-2-fill
   - name: 写作室
+    nameKey: nav.editor
     path: /editor
     localeIndependent: true
     icon: ri:edit-box-line

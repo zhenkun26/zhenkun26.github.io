@@ -20,9 +20,11 @@ import {
 import { getOgImageUrl } from '@lib/seo/og-image';
 import { SEO } from 'astro-seo';
 import { defaultLocale, getAlternateUrl, getHtmlLang, isI18nEnabled, localeList, localizedPath } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 
 const { meta } = Astro.props;
 const { locale, title, description, openGraph, robots, includeLocaleAlternates = true } = meta;
+const siteCopy = getContentSite(locale);
 
 const resolveAbsoluteUrl = (value: string | undefined) => (value ? new URL(value, Astro.site).href : undefined);
 
@@ -32,9 +34,9 @@ const ogDescription = openGraph?.description ?? description;
 const canonicalHref = meta.canonical ?? Astro.url.href;
 const ogUrl = resolveAbsoluteUrl(openGraph?.url) ?? canonicalHref;
 
-const keywords = meta.keywords || siteConfig.keywords || [siteConfig.title];
+const keywords = meta.keywords || siteConfig.keywords || [siteCopy?.title ?? siteConfig.title];
 const rssFeeds = meta.rssFeeds ?? [
-  { href: new URL(localizedPath('/rss.xml', locale), Astro.site).href, title: siteConfig.title },
+  { href: new URL(localizedPath('/rss.xml', locale), Astro.site).href, title: siteCopy?.title ?? siteConfig.title },
 ];
 
 const showLocaleAlternates = includeLocaleAlternates && isI18nEnabled;
@@ -83,7 +85,7 @@ const portraitHero =
       url: ogUrl,
     },
     optional: {
-      siteName: siteConfig.name,
+      siteName: siteCopy?.title ?? siteConfig.title,
       description: ogDescription,
     },
   }}
@@ -94,7 +96,7 @@ const portraitHero =
     ...(ogImage && { image: ogImage }),
   }}
   extend={{
-    meta: [{ name: 'author', content: siteConfig.author || '' }],
+    meta: [{ name: 'author', content: siteCopy?.name ?? siteConfig.author ?? '' }],
   }}
 />
 {/* astro-seo 暂不支持管理 keywords */}

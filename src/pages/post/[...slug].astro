@@ -37,6 +37,7 @@ import { Icon } from 'astro-icon/components';
 import { Comment } from '@/components/comment';
 import PostMarkdownActions from '@/components/post/PostMarkdownActions';
 import { defaultLocale, getLocaleLabel, localizedPath, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import { extractTextFromMarkdown } from '@/lib/sanitize';
 import { postRoute } from '../_shared/routes';
 
@@ -184,7 +185,7 @@ if (post.data.description) {
 
 <Layout
   locale={locale}
-  title={`${post.data.title}${categoryStr} | ${siteConfig.title}`}
+  title={`${post.data.title}${categoryStr} | ${(getContentSite(locale)?.title ?? siteConfig.title)}`}
   description={finalDescription}
   siderType={HomeSiderType.POST}
   post={post}

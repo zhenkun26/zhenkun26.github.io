@@ -6,6 +6,7 @@ import { siteConfig } from '@constants/site-config';
 import Layout from '@layouts/Layout.astro';
 import TwoColumnLayout from '@layouts/TwoColumnLayout.astro';
 import { defaultLocale, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 
 interface Props {
   locale?: string;
@@ -13,7 +14,7 @@ interface Props {
 
 // Root pages render the default locale; `[lang]/` mirrors pass their locale in explicitly.
 const { locale = defaultLocale } = Astro.props;
-const title = `${t(locale, 'friends.title')} | ${siteConfig.title}`;
+const title = `${t(locale, 'friends.title')} | ${getContentSite(locale)?.title ?? siteConfig.title}`;
 const description = t(locale, 'friends.title');
 ---
 

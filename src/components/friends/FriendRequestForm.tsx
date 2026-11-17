@@ -3,6 +3,7 @@ import { useTranslation } from '@hooks/useTranslation';
 import { cn } from '@lib/utils';
 import { useClipboard } from 'foxact/use-clipboard';
 import { useCallback, useState } from 'react';
+import { getContentFriends } from '@/i18n/content';
 import SakuraSVG from '../svg/SakuraSvg';
 
 const LABEL_CLASS = 'mb-1.5 block font-bold text-muted-foreground text-xs uppercase tracking-wide';
@@ -23,7 +24,7 @@ interface Props {
 }
 
 export default function FriendRequestForm({ locale }: Props) {
-  const { t } = useTranslation(locale);
+  const { t, locale: currentLocale } = useTranslation(locale);
   const [formData, setFormData] = useState<FormData>({
     site: '',
     owner: '',
@@ -75,7 +76,9 @@ color: "${formData.color || '#ffc0cb'}"`;
                 <SakuraSVG className="size-6 animate-spin text-[#FFC0CB] duration-10000" />
                 {t('friends.applyTitle')}
               </h2>
-              <p className="font-medium text-muted-foreground text-sm">{friendsIntro.applyDesc}</p>
+              <p className="font-medium text-muted-foreground text-sm">
+                {getContentFriends(currentLocale)?.applyDesc ?? friendsIntro.applyDesc}
+              </p>
             </div>
 
             <div className="space-y-4">

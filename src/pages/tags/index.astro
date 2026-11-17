@@ -8,6 +8,7 @@ import { Layout, TwoColumnLayout } from '@layouts/index';
 import { getAllTags, getSortedPosts } from '@lib/content';
 import { tierTags } from '@lib/content/index-tags';
 import { defaultLocale, t } from '@/i18n';
+import { getContentSite, getContentTagName } from '@/i18n/content';
 
 interface Props {
   locale?: string;
@@ -19,10 +20,12 @@ const mainTags = tags.filter(({ count }) => count > 1);
 const singleTags = tags.filter(({ count }) => count === 1);
 const stats = [
   { value: tags.length, label: t(locale, 'index.tags') },
-  ...(tags.length ? [{ value: tags[0].tag, label: t(locale, 'index.mostUsed'), labelFirst: true }] : []),
+  ...(tags.length
+    ? [{ value: getContentTagName(locale, tags[0].tag), label: t(locale, 'index.mostUsed'), labelFirst: true }]
+    : []),
 ];
 ---
-<Layout articleTools={false} locale={locale} title={`${t(locale, 'tag.allTags')} | ${siteConfig.title}`} description={t(locale, 'tag.allTags')}>
+<Layout articleTools={false} locale={locale} title={`${t(locale, 'tag.allTags')} | ${(getContentSite(locale)?.title ?? siteConfig.title)}`} description={t(locale, 'tag.allTags')}>
   <TwoColumnLayout showPostFooter={false}>
     <Cover compact slot="cover" title={t(locale, 'tag.allTags')} />
     <HomeSider slot="sider" />

@@ -6,6 +6,7 @@ import { seoConfig } from '@constants/site-config';
 import { Layout, TwoColumnLayout } from '@layouts/index';
 import { getCategoryLinks, getCategoryList, getSortedPosts } from '@lib/content';
 import { defaultLocale, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 
 interface Props {
   locale?: string;
@@ -18,7 +19,7 @@ const links = getCategoryLinks(categories, '');
 const posts = await getSortedPosts(locale);
 ---
 
-<Layout articleTools={false} locale={locale} title={`${t(locale, 'category.allCategories')} | ${seoConfig.title}`}>
+<Layout articleTools={false} locale={locale} title={`${t(locale, 'category.allCategories')} | ${(getContentSite(locale)?.title ?? seoConfig.title)}`}>
   <TwoColumnLayout showPostFooter={false}>
     <Cover compact slot="cover" title={t(locale, 'category.allCategories')} />
     <HomeSider slot="sider" />

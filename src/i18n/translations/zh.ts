@@ -33,7 +33,10 @@ export const uiStrings = {
   'nav.archives': '归档',
   'nav.friends': '友链',
   'nav.about': '关于',
+  'nav.editor': '写作室',
   'nav.music': '歌单',
+  'music.description': '我喜欢的音乐',
+  'music.empty': '歌单整理中。',
   'nav.weekly': '周刊',
   'nav.bangumi': '追番',
 

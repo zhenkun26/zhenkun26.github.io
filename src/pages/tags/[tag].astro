@@ -7,6 +7,7 @@ import { siteConfig } from '@constants/site-config';
 import { Layout, TwoColumnLayout } from '@layouts/index';
 import { getSortedPosts, normalizeTag } from '@lib/content';
 import { localizedPath, t } from '@/i18n';
+import { getContentSite, getContentTagName } from '@/i18n/content';
 import { tagRoute } from '../_shared/routes';
 
 export const getStaticPaths = tagRoute.root;
@@ -15,15 +16,16 @@ interface Props {
   locale: string;
 }
 const { tag, locale } = Astro.props;
+const displayName = getContentTagName(locale, tag);
 const allPosts = await getSortedPosts(locale);
 const posts = allPosts.filter((post) => post.data.tags?.some((tg) => normalizeTag(tg) === tag));
 ---
-<Layout articleTools={false} locale={locale} title={`${t(locale, 'tag.postsWithTag', { name: tag })} | ${siteConfig.title}`} description={t(locale, 'tag.postsWithTag', { name: tag })}>
+<Layout articleTools={false} locale={locale} title={`${t(locale, 'tag.postsWithTag', { name: displayName })} | ${(getContentSite(locale)?.title ?? siteConfig.title)}`} description={t(locale, 'tag.postsWithTag', { name: displayName })}>
   <TwoColumnLayout showPostFooter={false}>
-    <Cover compact slot="cover" title={t(locale, 'tag.postsWithTag', { name: tag })} />
+    <Cover compact slot="cover" title={t(locale, 'tag.postsWithTag', { name: displayName })} />
     <HomeSider slot="sider" />
     <div class="index-surface shadow-box">
-      <PageIntro stats={[{ value: posts.length, label: t(locale, 'index.posts') }]} breadcrumbs={[{ label: t(locale, 'nav.tags'), href: localizedPath('/tags', locale) }, { label: tag }]} />
+      <PageIntro stats={[{ value: posts.length, label: t(locale, 'index.posts') }]} breadcrumbs={[{ label: t(locale, 'nav.tags'), href: localizedPath('/tags', locale) }, { label: displayName }]} />
       <PostYears posts={posts} locale={locale} />
     </div>
   </TwoColumnLayout>

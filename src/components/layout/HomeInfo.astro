@@ -9,6 +9,7 @@ import { getLqipStyle } from '@lib/lqip';
 import { filterNavItems } from '@lib/utils';
 import { Icon } from 'astro-icon/components';
 import { getLocaleFromUrl, localizedPath, resolveNavName, stripLocaleFromPath, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import Social from './Social.astro';
 
 interface Props {
@@ -18,6 +19,9 @@ interface Props {
 
 const { isDrawer = false } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url.pathname);
+const siteCopy = getContentSite(locale);
+const name = siteCopy?.name ?? siteConfig.name;
+const bio = siteCopy?.description ?? siteConfig.description;
 const postCount = await getPostCount(locale);
 const { countMap } = await getCategoryList(locale);
 const posts = await getSortedPosts(locale);
@@ -27,7 +31,7 @@ const filteredRouters = filterNavItems(routers, configuredSeriesSlugs, enabledSe
 const strippedPath = stripLocaleFromPath(Astro.url.pathname);
 const avatar = siteConfig.avatar ?? '/img/avatar.webp';
 // Glue each separator to the tag before it, so a wrapped "FE / ACG / INFP" bio never starts a line with "/".
-const description = siteConfig.description?.replace(/\s+([/|·])\s+/g, '\u00a0$1 ');
+const description = bio?.replace(/\s+([/|·])\s+/g, '\u00a0$1 ');
 
 const resolveUrl = (item: Router) =>
   item.path ? (item.localeIndependent ? item.path : localizedPath(item.path, locale)) : item.path;
@@ -50,13 +54,13 @@ const stats = [
         data-greet-evening={t(locale, 'homeInfo.greetingEvening')}
         data-greet-night={t(locale, 'homeInfo.greetingNight')}
       >
-        <ResponsiveImage src={avatar} maxWidth={256} sizes="128px" alt={`${siteConfig.name ?? ''} avatar`} width="128" height="128" loading="lazy" decoding="async" />
+        <ResponsiveImage src={avatar} maxWidth={256} sizes="128px" alt={`${name ?? ''} avatar`} width="128" height="128" loading="lazy" decoding="async" />
         {christmasConfig.enabled && christmasConfig.features.christmasHat && <ChristmasHat />}
         <span class="home-greeting" aria-hidden="true"></span>
       </div>
       <div class="home-identity-text">
-        <p class="home-name">{siteConfig?.name}</p>
-        {description && <p class="home-description" title={siteConfig.description}>{description}</p>}
+        <p class="home-name">{name}</p>
+        {description && <p class="home-description" title={bio}>{description}</p>}
         <Social />
       </div>
     </div>

@@ -11,6 +11,7 @@ import { getPostsByCategory, translateSeriesField } from '@lib/content';
 import { toPostCardDataList } from '@lib/content/transforms';
 import { formatInTimeZone } from 'date-fns-tz';
 import { t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import { seriesRoute } from './_shared/routes';
 
 export const getStaticPaths = seriesRoute.root;
@@ -29,7 +30,7 @@ const seriesPosts = series.categoryName
 
 const seriesFullName = translateSeriesField(series.slug, 'fullName', series.fullName, locale);
 const seriesLabel = translateSeriesField(series.slug, 'label', series.label, locale);
-const pageTitle = `${seriesFullName || seriesLabel || series.categoryName} | ${siteConfig.title}`;
+const pageTitle = `${seriesFullName || seriesLabel || series.categoryName} | ${getContentSite(locale)?.title ?? siteConfig.title}`;
 // Oldest–newest year of the run; one year when the series has not crossed a new year yet.
 const span = [
   ...new Set([seriesPosts.at(-1), seriesPosts[0]].map((post) => post && formatInTimeZone(post.date, siteTimezone, 'yyyy'))),

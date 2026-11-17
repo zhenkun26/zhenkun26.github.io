@@ -15,6 +15,7 @@ import { cn } from '@lib/utils';
 import { Icon } from 'astro-icon/components';
 import UmamiPVSpan from '@/components/umami/UmamiPVSpan';
 import { defaultLocale, getLocaleFromUrl, getLocaleLabel, localizedPath, t } from '@/i18n';
+import { getContentTagName } from '@/i18n/content';
 import type { PostCardData } from '@/types/blog';
 
 export interface PostItemCardProps {
@@ -211,7 +212,7 @@ const titleMorph = postTitleMorphName(slug);
                 className='hover:text-badge-primary/80 shrink-0 cursor-pointer gap-0.5 border-none px-1 text-xs font-bold whitespace-nowrap transition-colors duration-300 flex'
                 variant="outline"
               >
-                <Icon name="fa6-solid:tags" /> {tag}
+                <Icon name="fa6-solid:tags" /> {getContentTagName(locale, tag)}
               </Badge>
             </a>
           ))}
