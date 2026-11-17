@@ -654,7 +654,17 @@ navigation:
     # path: # 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
     # lang: # 语言 (默认: 'zh-CN')
 comment:
-  provider: none  # 'remark42' | 'giscus' | 'waline' | 'twikoo' | 'none'
+  provider: giscus  # 'remark42' | 'giscus' | 'waline' | 'twikoo' | 'none'
+  giscus:
+    repo: zhenkun26/zhenkun26.github.io
+    repoId: R_kgDOVxD7JQ
+    category: Announcements
+    categoryId: DIC_kwDOVxD7Jc4DLTJe
+    mapping: pathname
+    reactionsEnabled: '1'
+    emitMetadata: '0'
+    inputPosition: top
+    # lang 不填：按页面语言自动切换中/英
   # remark42:
   #   host: https://comment.example.com/
   #   siteId: your-site-id
@@ -706,8 +716,8 @@ comment:
   #   # turnstileKey: ''               # Cloudflare Turnstile Key (可选)
   #   # locale:                        # 自定义语言显示 (可选)
   #   #   placeholder: '请留言...'      # 自定义输入框占位文本
-  twikoo:
-    envId: https://your-twikoo.vercel.app  # Twikoo 环境 ID (腾讯云) 或 Vercel 环境地址 (必填)
+  # twikoo:
+  #   envId: https://your-twikoo.vercel.app  # Twikoo 环境 ID (腾讯云) 或 Vercel 环境地址 (必填)
     # region: ap-shanghai              # 环境地域，默认为 ap-shanghai
     # path: location.pathname          # 用于区分不同文章的自定义 js 路径
     # lang: zh-CN                     # 语言 (默认: 'zh-CN')
@@ -726,8 +736,8 @@ comment:
 analytics:
   umami:
     enabled: true
-    id: your-umami-id
-    endpoint: https://stats.example.com
+    id: 3eb06ae2-71e1-4cd0-a50d-79da043209e7
+    endpoint: https://cloud.umami.is # Umami Cloud；自建则改为自己的地址
     # statistics_display:
     #   token: your-umami-share-token
     #   article_page_views: true
