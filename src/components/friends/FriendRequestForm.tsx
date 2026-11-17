@@ -2,7 +2,7 @@ import { friendsIntro } from '@constants/friends-config';
 import { useTranslation } from '@hooks/useTranslation';
 import { cn } from '@lib/utils';
 import { useClipboard } from 'foxact/use-clipboard';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getContentFriends } from '@/i18n/content';
 import SakuraSVG from '../svg/SakuraSvg';
 
@@ -31,8 +31,13 @@ export default function FriendRequestForm({ locale }: Props) {
     url: '',
     desc: '',
     image: '',
-    color: '#ffc0cb',
+    color: '',
   });
+
+  useEffect(() => {
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--brand-input').trim();
+    setFormData((previous) => (previous.color ? previous : { ...previous, color }));
+  }, []);
 
   const { copied, copy } = useClipboard({ timeout: 2000 });
 
@@ -42,7 +47,7 @@ url: ${formData.url || 'https://example.com'}
 owner: ${formData.owner || t('friends.ownerPlaceholder')}
 desc: ${formData.desc || t('friends.descPlaceholder')}
 image: ${formData.image || 'https://example.com/avatar.jpg'}
-color: "${formData.color || '#ffc0cb'}"`;
+color: "${formData.color}"`;
   }, [formData, t]);
 
   const handleCopy = useCallback(() => {
@@ -73,7 +78,7 @@ color: "${formData.color || '#ffc0cb'}"`;
           <div className="relative z-10">
             <div className="mb-6">
               <h2 className="mb-2 flex items-center gap-2 font-black text-2xl text-foreground">
-                <SakuraSVG className="size-6 animate-spin text-[#FFC0CB] duration-10000" />
+                <SakuraSVG className="size-6 animate-spin text-primary duration-10000" />
                 {t('friends.applyTitle')}
               </h2>
               <p className="font-medium text-muted-foreground text-sm">
@@ -168,7 +173,8 @@ color: "${formData.color || '#ffc0cb'}"`;
                         id="friend-color"
                         type="color"
                         name="color"
-                        value={formData.color}
+                        value={formData.color || '#000000'}
+                        style={{ visibility: formData.color ? 'visible' : 'hidden' }}
                         onChange={handleChange}
                         className="absolute -top-1/2 -left-1/2 h-[200%] w-[200%] cursor-pointer p-0"
                       />
@@ -204,7 +210,7 @@ color: "${formData.color || '#ffc0cb'}"`;
               <pre className="whitespace-pre-wrap font-mono text-foreground/80 text-xs leading-relaxed">{generateText()}</pre>
             </div>
 
-            <div className="mt-6 flex items-center gap-3 rounded-xl bg-primary/10 p-4 font-medium text-pink-600 text-xs dark:text-primary">
+            <div className="mt-6 flex items-center gap-3 rounded-xl bg-primary/10 p-4 font-medium text-primary text-xs dark:text-primary">
               {t('friends.hint')}
             </div>
           </div>

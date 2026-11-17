@@ -242,14 +242,12 @@ friends:
         owner: 你的昵称 # 昵称
         desc: 站点简介 # 站点简介
         image: https://your-blog.com/avatar.jpg # 头像链接
-        color: "#ffc0cb" # 主题色（可选）
   data: # 友链列表；同组内按这里的顺序展示
     - site: 余弦の博客
       url: https://blog.cosine.ren
       owner: cos
       desc: astro-koharu 主题作者
       image: https://blog.cosine.ren/img/avatar.webp
-      color: '#ffc0cb'
       group: following
 
 # =============================================================================

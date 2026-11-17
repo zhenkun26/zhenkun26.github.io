@@ -1,0 +1,42 @@
+/* Giscus/Primer overrides. The base theme retains syntax and status colors.
+   https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#data-theme */
+main {
+  --color-fg-default: hsl(var(--foreground));
+  --color-fg-muted: hsl(var(--muted-foreground));
+  --color-fg-subtle: hsl(var(--muted-foreground));
+  --color-canvas-default: hsl(var(--card));
+  --color-canvas-overlay: hsl(var(--popover));
+  --color-canvas-inset: hsl(var(--background));
+  --color-canvas-subtle: hsl(var(--muted));
+  --color-border-default: hsl(var(--border));
+  --color-border-muted: hsl(var(--border) / 0.6);
+  --color-neutral-muted: hsl(var(--muted));
+  --color-accent-fg: hsl(var(--primary));
+  --color-accent-emphasis: hsl(var(--primary));
+  --color-accent-muted: hsl(var(--primary) / 0.35);
+  --color-accent-subtle: hsl(var(--primary) / 0.1);
+  --color-btn-text: hsl(var(--foreground));
+  --color-btn-bg: hsl(var(--muted));
+  --color-btn-border: hsl(var(--border));
+  --color-btn-hover-bg: hsl(var(--accent));
+  --color-btn-hover-border: hsl(var(--primary));
+  --color-btn-active-bg: hsl(var(--accent));
+  --color-btn-active-border: hsl(var(--primary));
+  --color-btn-selected-bg: hsl(var(--accent));
+  --color-btn-primary-text: hsl(var(--primary-foreground));
+  --color-btn-primary-bg: hsl(var(--primary));
+  --color-btn-primary-border: hsl(var(--primary));
+  --color-btn-primary-hover-bg: hsl(var(--brand-hover));
+  --color-btn-primary-hover-border: hsl(var(--brand-hover));
+  --color-btn-primary-selected-bg: hsl(var(--brand-hover));
+  --color-btn-primary-disabled-text: hsl(var(--primary-foreground) / 0.65);
+  --color-btn-primary-disabled-bg: hsl(var(--primary) / 0.45);
+  --color-btn-primary-disabled-border: transparent;
+  --color-action-list-item-default-hover-bg: hsl(var(--accent));
+  --color-scale-gray-1: hsl(var(--muted));
+  --color-scale-blue-1: hsl(var(--primary) / 0.15);
+  --color-btn-primary-selected-shadow: inset 0 1px 0 hsl(var(--brand-shadow) / 0.25);
+  --color-segmented-control-bg: hsl(var(--muted));
+  --color-segmented-control-button-bg: hsl(var(--card));
+  --color-segmented-control-button-selected-border: hsl(var(--border));
+}

@@ -9,12 +9,15 @@ const PETAL_PATH =
   'M10 24C4.6 20.4.4 14 1.3 7.9 2 3.3 5.4.6 8.7 1.3L10 4.1l1.3-2.8c3.3-.7 6.7 2 7.4 6.6.9 6.1-3.3 12.5-8.7 16.1Z';
 
 /** Tip and base colors per variant; the gradient runs from the notched tip to the base. */
-export const PETAL_COLORS: ReadonlyArray<readonly [tip: string, base: string]> = [
-  ['#ffe6ee', '#ff9ebd'],
-  ['#fff3f7', '#ffb8cc'],
-  ['#ffd9e5', '#f7879f'],
-  ['#fff9fb', '#ffc7d6'],
-];
+const PETAL_COLOR_PROPERTIES = [
+  ['--brand-petal-tip', '--brand-petal-base'],
+  ['--brand-petal-soft-tip', '--brand-petal-soft-base'],
+  ['--brand-petal-tip', '--brand-petal-soft-base'],
+  ['--brand-petal-soft-tip', '--brand-petal-base'],
+] as const;
+
+// DOM petals resolve these on every theme change, including petals already in flight.
+export const PETAL_COLORS = PETAL_COLOR_PROPERTIES.map(([tip, base]) => [`var(${tip})`, `var(${base})`] as const);
 
 /**
  * Pre-render every color variant once so each frame is only a `drawImage` per petal.
@@ -22,7 +25,10 @@ export const PETAL_COLORS: ReadonlyArray<readonly [tip: string, base: string]> =
  */
 export function createPetalSprites(scale: number): HTMLCanvasElement[] {
   const path = new Path2D(PETAL_PATH);
-  return PETAL_COLORS.map(([tip, base]) => {
+  const styles = getComputedStyle(document.documentElement);
+  return PETAL_COLOR_PROPERTIES.map(([tipProperty, baseProperty]) => {
+    const tip = styles.getPropertyValue(tipProperty).trim();
+    const base = styles.getPropertyValue(baseProperty).trim();
     const canvas = document.createElement('canvas');
     canvas.width = Math.ceil(PETAL_VIEWBOX.width * scale);
     canvas.height = Math.ceil(PETAL_VIEWBOX.height * scale);

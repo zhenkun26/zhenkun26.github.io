@@ -33,20 +33,16 @@ export default {
         gray: {
           400: 'hsl(var(--grey-4))',
         },
-        logo: '#e91e63',
-        mandy: {
-          50: '#fef2f3',
-          100: '#fde6e8',
-          200: '#fbd0d4',
-          300: '#f7aab2',
-          400: '#f27a8a',
-          500: '#e91e63',
-          600: '#d42a4c',
-          700: '#b21e3f',
-          800: '#961b3b',
-          900: '#801b38',
-          950: '#470a1a',
-        },
+        logo: 'hsl(var(--brand-logo))',
+        // Legacy class names map to the current brand, never to a second literal palette.
+        mandy: Object.fromEntries(
+          [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((shade) => [
+            shade,
+            shade <= 500
+              ? `color-mix(in srgb, hsl(var(--primary)) ${shade / 5}%, hsl(var(--card)))`
+              : `color-mix(in srgb, hsl(var(--primary)) ${100 - (shade - 500) / 6}%, hsl(var(--brand-shadow)))`,
+          ]),
+        ),
         // shoka migrate
         pink: {
           a3: 'var(--color-pink-a3)',

@@ -1,5 +1,52 @@
 # 主题系统实现
 
+## Yuran blue-cyan palette
+
+The brand source of truth is `public/theme/palette.css`. Edit its `:root` and
+`.dark` tokens together. `src/styles/theme/shadcn.css` bundles it into the site
+and both Writing Room documents; `public/rss/feed.css` imports the same public
+file. Do not add literal brand colors to components, Tailwind configuration,
+shadows or canvas code.
+
+- `--primary` and `--primary-foreground`: links, focus rings and solid controls.
+- `--brand-button-*`: dark blue-to-cyan gradients with readable light labels in
+  both modes. These labels deliberately differ from dark-mode solid buttons.
+- `--brand-logo`, `--brand-highlight`, `--brand-shadow`, `--brand-scrim`: header
+  branding, decorative marks, elevation and cover shading.
+- `--brand-petal-*`: cover canvas, click bursts and TOC decoration. Canvas
+  sprites refresh on theme changes; DOM petals resolve CSS variables directly.
+- `--brand-input`: the hex default for the optional friend-color picker. Friend
+  cards without an explicitly supplied color inherit the current primary color.
+
+Legacy Shoka and `mandy` names are compatibility aliases, not independent color
+palettes. Authored Markdown named colors, syntax highlighting, warning/error
+colors, seasonal Christmas decorations, third-party brand icons and the owner's
+selected image assets retain their intentional colors. Christmas is currently
+disabled in site configuration.
+
+### Embedded comments
+
+`src/pages/theme/giscus-[mode].css.ts` builds `/theme/giscus-light.css` and
+`/theme/giscus-dark.css` from the same palette plus
+`src/styles/components/giscus.css`. The parent supplies an absolute HTTPS theme
+URL and updates it on light/dark changes through the Giscus React component.
+An explicit `comment.giscus.theme` remains an intentional override.
+
+HTTP local previews use Giscus's built-in light/dark theme because an HTTPS
+iframe cannot load HTTP styles. Verify the custom theme and its CORS response
+on GitHub Pages after deployment. Waline and Twikoo use the parent's semantic
+variables when those optional providers are selected.
+
+### Verification
+
+Run `pnpm test:theme` to check normal-text and button contrast and reject the
+previous literal pink brand colors in UI sources. Also run `pnpm test:motion`,
+`pnpm check`, `pnpm lint:fix`, and `pnpm build`. Inspect both languages in light
+and dark mode on desktop and mobile; include navigation, search, settings,
+article TOC, friend cards, the 404 page and Writing Room. Image colors do not
+indicate a theme regression.
+
+
 ## 概述
 
 astro-koharu 实现了完整的深色/浅色主题切换功能，包括：
@@ -16,7 +63,7 @@ astro-koharu 实现了完整的深色/浅色主题切换功能，包括：
 
 ### 整体流程
 
-```
+```plain
 ┌─────────────────────────────────────────────────────────────┐
 │                    主题系统工作流程                          │
 └─────────────────────────────────────────────────────────────┘
@@ -305,7 +352,7 @@ document.addEventListener('astro:page-load', setupThemeToggle);
 
 ### 动画效果图
 
-```
+```plain
 浅色模式（太阳）              深色模式（月亮）
     ·  ·  ·                     ╭──────╮
    ·  ╭──╮  ·                  │      │
@@ -357,7 +404,7 @@ document.addEventListener('astro:page-load', setupThemeToggle);
 
 ### 动画原理
 
-```
+```plain
 1. 点击切换按钮
    ┌─────────────────────┐
    │                     │
@@ -458,28 +505,19 @@ if (localStorage.theme === 'dark') {
 ### 主题变量定义
 
 ```css
-/* src/styles/theme/index.css */
-
-/* 浅色模式变量 */
+/* Excerpt from public/theme/palette.css. Edit that file, not these examples. */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  /* ... 更多变量 */
+  --background: 195 35% 98%;
+  --foreground: 205 30% 18%;
+  --primary: 190 85% 28%;
+  --primary-foreground: 0 0% 100%;
 }
 
-/* 深色模式变量 */
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  /* ... 更多变量 */
+  --background: 205 32% 11%;
+  --foreground: 192 25% 92%;
+  --primary: 187 70% 68%;
+  --primary-foreground: 205 45% 12%;
 }
 ```
 

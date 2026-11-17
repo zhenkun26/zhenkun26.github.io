@@ -76,8 +76,9 @@ const PAGE_MODULES = import.meta.glob('/src/pages/**/*.{astro,md,mdx,ts}');
 const MIRROR_EXEMPT = new Set([
   // Static hosts serve a single /404.html; the page localizes itself at runtime.
   '404',
-  // Locale-agnostic RSS stylesheet asset.
+  // Locale-agnostic RSS and embedded-comment stylesheets.
   'rss/feed.xsl',
+  'theme/giscus-[mode].css',
   // The first editor release is one shared Chinese workbench, including its preview frame.
   'editor/index',
   'editor/preview',

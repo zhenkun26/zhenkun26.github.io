@@ -4,22 +4,17 @@ import { useEffect, useState } from 'react';
 import { commentConfig } from '@/constants/site-config';
 import { getHtmlLang } from '@/i18n/utils';
 
-type GiscusTheme = 'light' | 'dark';
-
-function sendMessage<T>(message: T) {
-  const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
-  if (!iframe) return;
-  iframe.contentWindow?.postMessage({ giscus: message }, 'https://giscus.app');
-}
-
-function getTheme(): GiscusTheme {
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+function getTheme(): string {
+  const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  // The public CSS assets are built from the same palette as the parent page.
+  // HTTP development previews use Giscus's built-in theme (HTTPS frames block HTTP styles).
+  return window.location.protocol === 'https:' ? new URL(`/theme/giscus-${mode}.css`, window.location.origin).href : mode;
 }
 
 export default function Giscus() {
   const config = commentConfig.giscus;
   const { locale } = useTranslation();
-  const [theme, setTheme] = useState<GiscusTheme>('light');
+  const [theme, setTheme] = useState('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -31,7 +26,6 @@ export default function Giscus() {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           const newTheme = getTheme();
           setTheme(newTheme);
-          sendMessage({ setConfig: { theme: newTheme } });
         }
       }
     });

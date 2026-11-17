@@ -20,16 +20,16 @@ interface CSSCustomProperties extends React.CSSProperties {
   '--card-color'?: string;
 }
 
-const DEFAULT_COLOR = '#ffc0cb';
-// Cute SVG Avatar Data URI (Pink Theme)
+const DEFAULT_COLOR = 'hsl(var(--primary))';
+// Neutral fallback artwork sits on the shared accent surface
 const DEFAULT_AVATAR = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#ffc0cb"/>
+  <rect width="100" height="100" fill="none"/>
   <circle cx="30" cy="45" r="6" fill="#fff"/>
   <circle cx="70" cy="45" r="6" fill="#fff"/>
   <path d="M 35 65 Q 50 75 65 65" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <circle cx="20" cy="55" r="6" fill="#ff9eb5" opacity="0.5"/>
-  <circle cx="80" cy="55" r="6" fill="#ff9eb5" opacity="0.5"/>
+  <circle cx="20" cy="55" r="6" fill="#fff" opacity="0.5"/>
+  <circle cx="80" cy="55" r="6" fill="#fff" opacity="0.5"/>
 </svg>
 `)}`;
 
@@ -86,7 +86,7 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
     y.set(0);
   };
 
-  const cardColor = normalizeHexColor(friend.color || DEFAULT_COLOR);
+  const cardColor = (friend.color ? normalizeHexColor(friend.color) : null) || DEFAULT_COLOR;
   const avatarImage = friend.image || DEFAULT_AVATAR;
 
   return (
@@ -117,7 +117,9 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
             {/* Background Image / Color */}
             <div
               className="absolute inset-0 h-16 w-full"
-              style={{ background: `linear-gradient(to bottom right, ${cardColor}, ${cardColor}80)` }}
+              style={{
+                background: `linear-gradient(to bottom right, ${cardColor}, color-mix(in srgb, ${cardColor} 50%, transparent))`,
+              }}
             />
 
             {/* Avatar */}
@@ -126,6 +128,7 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
                 <img
                   src={avatarImage}
                   alt={friend.owner}
+                  style={{ background: DEFAULT_COLOR }}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />

@@ -126,7 +126,7 @@
     text-align: center;
     font-family: "Bear Days", sans-serif;
     font-weight: 700;
-    color: #e9546b;
+    color: hsl(var(--brand-logo));
 
     @media (max-width: 992px) {
       font-size: clamp(1.25rem, 4vw, 2rem);
@@ -136,5 +136,5 @@
 }
 
 .dark .logo-text {
-  color: #ed788c;
+  color: hsl(var(--brand-logo));
 }

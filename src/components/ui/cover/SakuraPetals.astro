@@ -64,8 +64,14 @@
       window.addEventListener('pointermove', onPointerMove, { passive: true });
       const unsubscribe = subscribeMotionLevel(() => this.sync());
 
+      let dark = document.documentElement.classList.contains('dark');
       let christmas = document.documentElement.classList.contains('christmas');
       const effectsObserver = new MutationObserver(() => {
+        const nextDark = document.documentElement.classList.contains('dark');
+        if (nextDark !== dark) {
+          dark = nextDark;
+          field.refreshColors();
+        }
         const next = document.documentElement.classList.contains('christmas');
         if (next !== christmas) {
           christmas = next;

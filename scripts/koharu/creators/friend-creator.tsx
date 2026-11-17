@@ -39,11 +39,11 @@ const STEP_CONFIGS: StepConfig[] = [
 ];
 
 const PRESET_COLORS = [
+  { label: 'Site palette (recommended)', value: '' },
   { label: '粉色 (#ffc0cb)', value: '#ffc0cb' },
   { label: '蓝色 (#BEDCFF)', value: '#BEDCFF' },
   { label: '绿色 (#98D8AA)', value: '#98D8AA' },
   { label: '自定义颜色', value: 'custom' },
-  { label: '不设置颜色', value: '' },
 ];
 
 export function FriendCreator({ onComplete, showReturnHint = false }: CreatorProps) {

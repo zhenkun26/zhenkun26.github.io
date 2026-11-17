@@ -9,7 +9,7 @@
   color: rgb(253 230 138);
 }
 .colophon-meta[data-tone="accent"] {
-  color: rgb(255 214 224);
+  color: hsl(var(--brand-highlight));
 }
 .colophon-meta-trigger {
   display: inline-flex;
@@ -38,7 +38,7 @@
   border-radius: 0.625rem;
   background: hsl(var(--popover));
   color: hsl(var(--popover-foreground));
-  box-shadow: 0 0.75rem 2rem -0.75rem rgb(28 8 20 / 0.35);
+  box-shadow: 0 0.75rem 2rem -0.75rem hsl(var(--brand-shadow) / 0.35);
   font-size: 0.8125rem;
   line-height: 1.6;
   text-align: start;

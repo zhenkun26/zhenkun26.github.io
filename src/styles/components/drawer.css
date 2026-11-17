@@ -10,7 +10,7 @@
   inset: 0;
   z-index: 40;
   visibility: hidden;
-  background: rgb(24 12 30 / 0.46);
+  background: hsl(var(--brand-shadow) / 0.46);
   opacity: 0;
   transition:
     opacity var(--drawer-dur, 280ms) var(--ease-in-quart),
@@ -39,7 +39,7 @@
   background: var(--gradient-bg-start);
   box-shadow:
     inset -1px 0 0 hsl(var(--primary) / 0.12),
-    1.5rem 0 3rem -1.5rem rgb(40 12 32 / 0.35);
+    1.5rem 0 3rem -1.5rem hsl(var(--brand-shadow) / 0.35);
   /* Past the edge by the shadow's reach, so nothing of it peeks in while closed. */
   translate: calc(-100% - 3rem) 0;
   visibility: hidden;

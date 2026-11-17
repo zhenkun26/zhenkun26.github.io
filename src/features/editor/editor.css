@@ -177,19 +177,19 @@
   padding-inline: 14px;
   border-radius: 999px;
   background-image: var(--gradient-shoka-button);
-  color: #fff;
+  color: hsl(var(--brand-button-foreground));
   font-weight: 600;
   box-shadow:
-    0 6px 16px -8px rgb(233 84 107 / 0.6),
-    0 1px 2px rgb(40 20 40 / 0.1);
+    0 6px 16px -8px hsl(var(--primary) / 0.6),
+    0 1px 2px hsl(var(--brand-shadow) / 0.1);
 }
 @media (hover: hover) {
   .editor-primary:hover {
-    color: #fff;
+    color: hsl(var(--brand-button-foreground));
     background-color: transparent;
     box-shadow:
-      0 8px 20px -8px rgb(233 84 107 / 0.75),
-      0 1px 2px rgb(40 20 40 / 0.1);
+      0 8px 20px -8px hsl(var(--primary) / 0.75),
+      0 1px 2px hsl(var(--brand-shadow) / 0.1);
   }
 }
 .editor-soft {
@@ -513,10 +513,10 @@
 .editor-panel-scrim {
   position: absolute;
   inset: 0;
-  background: rgb(36 18 36 / 0.3);
+  background: hsl(var(--brand-shadow) / 0.3);
 }
 .dark .editor-panel-scrim {
-  background: rgb(8 5 16 / 0.58);
+  background: hsl(var(--brand-shadow) / 0.58);
 }
 /* The moving shell must not scroll: animating a scroll container repaints its whole content every frame. */
 .editor-panel {
@@ -529,7 +529,7 @@
   overflow: hidden;
   background: hsl(var(--background));
   border-left: 1px solid var(--editor-hairline);
-  box-shadow: -24px 0 48px -24px rgb(20 10 30 / 0.25);
+  box-shadow: -24px 0 48px -24px hsl(var(--brand-shadow) / 0.25);
   transition: translate 280ms var(--ease-out-expo);
 }
 .editor-panel-body {
@@ -1065,7 +1065,7 @@
   color: hsl(var(--background));
   font-size: 12px;
   line-height: 32px;
-  box-shadow: 0 8px 24px -8px rgb(20 10 30 / 0.4);
+  box-shadow: 0 8px 24px -8px hsl(var(--brand-shadow) / 0.4);
 }
 .editor-syntax-feedback:empty {
   display: none;
@@ -1437,7 +1437,7 @@
     max-height: min(88dvh, var(--editor-height, 100dvh));
     border-left: 0;
     border-radius: 20px 20px 0 0;
-    box-shadow: 0 -12px 40px -16px rgb(20 10 30 / 0.35);
+    box-shadow: 0 -12px 40px -16px hsl(var(--brand-shadow) / 0.35);
   }
   /* Filtering must not resize the reference sheet under the reader's finger. */
   .editor-panel:has(.editor-syntax-panel) {

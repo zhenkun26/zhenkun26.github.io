@@ -1,6 +1,6 @@
 /*
   Silk-thread scrollbars for mouse and trackpad users; touch devices keep their native overlay bars.
-  A slim bead rides a 1px pink thread that ends in a hanging petal, echoing the theme's button
+  A slim bead rides a 1px accent thread that ends in a hanging petal, echoing the theme's button
   gradient and the petals falling across the cover. Nothing shows at rest: hovering a scroll area
   brings up the thread and a faint bead, scrolling it (src/lib/scrollbar-activity.ts sets
   data-scroll-active) lights the bead up, and the bead widens under the pointer. The page is always
@@ -11,7 +11,7 @@
   Chromium restyles a nested scrollbar only when its element's own style changes, hence the
   non-inherited --scrollbar-live companion to every hover and data-scroll-active state. It also
   ignores ::-webkit-scrollbar on elements with scrollbar-width or scrollbar-color, so those standard
-  properties are left to engines without the pseudo-elements (Firefox), which get a thin pink thumb.
+  properties are left to engines without the pseudo-elements (Firefox), which get a thin accent thumb.
 */
 
 @property --scrollbar-live {

@@ -1,0 +1,70 @@
+/* Shared brand palette: site, editor, RSS and embedded comments.
+   Keep literal brand colors here; consumers use semantic variables.
+   Artwork, syntax highlighting, status colors and third-party brands are independent. */
+:root {
+  --background: 195 35% 98%;
+  --foreground: 205 30% 18%;
+  --card: 195 35% 99%;
+  --card-foreground: 205 35% 14%;
+  --popover: 195 35% 99%;
+  --popover-foreground: 205 35% 14%;
+  --primary: 190 85% 28%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 193 32% 94%;
+  --secondary-foreground: 205 35% 14%;
+  --muted: 193 32% 94%;
+  --muted-foreground: 203 16% 36%;
+  --accent: 190 42% 92%;
+  --accent-foreground: 205 35% 14%;
+  --border: 194 24% 86%;
+  --input: 194 24% 86%;
+  --ring: var(--primary);
+  --badge-primary: var(--primary);
+
+  --brand-hover: 199 82% 29%;
+  --brand-button-start: 199 82% 34%;
+  --brand-button-end: 184 82% 26%;
+  --brand-button-foreground: 0 0% 100%;
+  --brand-highlight: 187 76% 83%;
+  --brand-shadow: 205 45% 12%;
+  --brand-scrim: 205 45% 10%;
+  --brand-logo: 187 70% 67%;
+  --brand-petal-tip: #dcf8fc;
+  --brand-petal-base: #55c6d7;
+  --brand-petal-soft-tip: #effcff;
+  --brand-petal-soft-base: #93dbe8;
+  --brand-input: #0b7285;
+  --gradient-bg-start: hsl(var(--background));
+  --gradient-bg-end: hsl(194 28% 92%);
+  --gradient-header: linear-gradient(-225deg, hsl(194 55% 91%), hsl(180 42% 91%));
+}
+
+.dark {
+  --background: 205 32% 11%;
+  --foreground: 192 25% 92%;
+  --card: 204 30% 14%;
+  --card-foreground: 192 25% 92%;
+  --popover: 204 30% 15%;
+  --popover-foreground: 192 25% 92%;
+  --primary: 187 70% 68%;
+  --primary-foreground: 205 45% 12%;
+  --secondary: 203 27% 20%;
+  --secondary-foreground: 192 25% 95%;
+  --muted: 203 27% 20%;
+  --muted-foreground: 195 18% 70%;
+  --accent: 200 32% 23%;
+  --accent-foreground: 192 25% 95%;
+  --border: 201 24% 27%;
+  --input: 201 24% 27%;
+  --ring: var(--primary);
+  --badge-primary: var(--primary);
+  --brand-hover: 185 75% 79%;
+  --brand-highlight: 187 76% 83%;
+  --brand-petal-tip: #c4eff8;
+  --brand-petal-base: #45b3cd;
+  --brand-petal-soft-tip: #dcf8fc;
+  --brand-petal-soft-base: #76cbdc;
+  --gradient-bg-start: hsl(var(--background));
+  --gradient-bg-end: hsl(207 35% 8%);
+  --gradient-header: linear-gradient(-225deg, hsl(205 34% 17%), hsl(188 32% 18%));
+}

@@ -58,6 +58,10 @@ export class PetalField {
     return this.frame !== 0;
   }
 
+  refreshColors(): void {
+    this.sprites = createPetalSprites(SPRITE_UNIT * this.dpr);
+  }
+
   resize(width: number, height: number): void {
     if (width === this.width && height === this.height) return;
     const firstLayout = this.width === 0;
@@ -66,7 +70,7 @@ export class PetalField {
     this.height = height;
     this.canvas.width = Math.round(width * this.dpr);
     this.canvas.height = Math.round(height * this.dpr);
-    if (this.sprites.length === 0) this.sprites = createPetalSprites(SPRITE_UNIT * this.dpr);
+    this.refreshColors();
 
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     const density = (width * height) / (coarse ? 30000 : 24000);

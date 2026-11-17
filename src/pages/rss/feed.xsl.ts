@@ -21,7 +21,7 @@ export async function GET(_context: APIContext) {
     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
     <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes" />
     <xsl:template match="/">
-        <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+        <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" class="dark">
             <head>
                 <title><xsl:value-of select="/rss/channel/title" /> - RSS Feed</title>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,7 +33,7 @@ export async function GET(_context: APIContext) {
                     href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;display=swap"
                     rel="stylesheet" />
             </head>
-            <body style="background-color: #121214; color: #f0f0f0; margin: 0; padding: 0;">
+            <body>
                 <div class="background-decorations">
                     <div class="floating-shape shape-1"></div>
                     <div class="floating-shape shape-2"></div>
