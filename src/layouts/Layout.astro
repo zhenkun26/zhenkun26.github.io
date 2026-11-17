@@ -64,6 +64,7 @@ const isPostPage = stripLocaleFromPath(Astro.url.pathname).startsWith('/post/');
     <slot name="head" />
   </head>
   <body data-pagefind-ignore={meta.robots?.includes('noindex') ? 'all' : undefined}>
+    <slot name="before-shell" />
     <AppShell articleTools={articleTools} post={post} siderType={siderType} isPostPage={isPostPage}>
       <slot />
     </AppShell>
