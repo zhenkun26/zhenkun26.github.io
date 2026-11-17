@@ -1,22 +1,14 @@
-/**
- * LanguageSwitcher Component
- *
- * Dropdown for switching between locales.
- * Uses i18n config to display available locales and navigates
- * to the locale-aware alternate URL.
- *
- * Derives currentPath from the live URL so it stays correct
- * after Astro View Transition navigations.
- */
+/** A shared, locale-aware segmented control for desktop and mobile navigation. */
 
-import Popover from '@components/ui/popover';
-import { Icon } from '@iconify/react';
+import { navigate } from 'astro:transitions/client';
+import { isMotionDisabled } from '@lib/motion-level';
 import { cn } from '@lib/utils';
-import { memo, useCallback, useSyncExternalStore } from 'react';
-import { getAlternateUrl, getLocaleFromUrl, localeEntries } from '@/i18n';
-import { NavMenu } from './NavMenu';
+import { type CSSProperties, memo, useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { getAlternateUrl, getLocaleFromUrl, localeEntries, t } from '@/i18n';
+import '@/styles/components/language-switcher.css';
 
-/** Subscribe to pathname changes via Astro's `astro:page-load` event. */
+const SLIDE_DURATION = 260;
+
 function subscribePathname(callback: () => void) {
   document.addEventListener('astro:page-load', callback);
   return () => document.removeEventListener('astro:page-load', callback);
@@ -26,75 +18,107 @@ function getPathname() {
   return window.location.pathname;
 }
 
-function getServerPathname() {
-  return '/';
-}
-
 interface LanguageSwitcherProps {
-  /** Initial locale code from SSR (e.g., 'zh', 'en') */
-  locale: string;
+  /** The rendered page path also supplies the matching SSR/hydration snapshot. */
+  currentPath: string;
   className?: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
 }
 
-const LanguageSwitcherComponent = ({ locale: _ssrLocale, className, open, onOpenChange }: LanguageSwitcherProps) => {
-  const currentPath = useSyncExternalStore(subscribePathname, getPathname, getServerPathname);
+function LanguageSwitcherComponent({ currentPath: serverPath, className }: LanguageSwitcherProps) {
+  const currentPath = useSyncExternalStore(subscribePathname, getPathname, () => serverPath);
+  const locale = getLocaleFromUrl(currentPath);
+  const [pendingLocale, setPendingLocale] = useState<string | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navigation = useRef<Promise<void> | null>(null);
 
-  // Derive locale from live URL so it stays in sync after View Transition navigations
-  const locale = typeof window !== 'undefined' ? getLocaleFromUrl(currentPath) : _ssrLocale;
+  useEffect(() => {
+    const cancelPendingNavigation = () => {
+      if (timer.current !== null) clearTimeout(timer.current);
+      timer.current = null;
+    };
+    const syncSelection = () => {
+      cancelPendingNavigation();
+      setPendingLocale(null);
+    };
+    // Another link or history navigation must not be interrupted by a delayed locale change.
+    document.addEventListener('astro:before-preparation', cancelPendingNavigation);
+    document.addEventListener('astro:page-load', syncSelection);
+    return () => {
+      cancelPendingNavigation();
+      document.removeEventListener('astro:before-preparation', cancelPendingNavigation);
+      document.removeEventListener('astro:page-load', syncSelection);
+    };
+  }, []);
 
-  // Find current locale label
-  const currentLabel = localeEntries.find((l) => l.code === locale)?.label ?? locale;
+  if (localeEntries.length <= 1) return null;
 
-  const renderDropdownContent = useCallback(
-    ({ close }: { close: () => void }) => (
-      <NavMenu
-        items={localeEntries.map((entry) => ({
-          key: entry.code,
-          href: getAlternateUrl(currentPath, entry.code),
-          label: entry.label,
-          current: entry.code === locale,
-        }))}
-        onSelect={close}
-      />
-    ),
-    [locale, currentPath],
+  const selectedIndex = Math.max(
+    0,
+    localeEntries.findIndex((entry) => entry.code === (pendingLocale ?? locale)),
   );
-
-  // Don't render if only one locale is configured
-  if (localeEntries.length <= 1) {
-    return null;
-  }
 
   return (
-    <Popover
-      open={open}
-      onOpenChange={onOpenChange}
-      placement="bottom-end"
-      trigger="hover"
-      render={renderDropdownContent}
-      className="nav-popover"
+    <nav
+      className={cn('language-switcher', className)}
+      aria-label={t(locale, 'common.language')}
+      style={
+        {
+          '--language-count': localeEntries.length,
+          '--language-index': selectedIndex,
+          '--language-duration': `${SLIDE_DURATION}ms`,
+        } as CSSProperties
+      }
     >
-      <button
-        type="button"
-        className={cn(
-          'size-10 flex-center cursor-pointer rounded-full transition-[background-color,scale] duration-200 ease-out-quart hover:bg-current/15 active:scale-90',
-          className,
-        )}
-        aria-label={`Language: ${currentLabel}`}
-        aria-haspopup="true"
-        aria-expanded={open}
-      >
-        {/* 图标数据异步加载，固定尺寸容器保证 SSR/加载前后几何不变，避免 popover 重定位 */}
-        <span className="inline-flex size-7 items-center justify-center">
-          <Icon icon="ri:translate" className="size-7" />
-        </span>
-      </button>
-    </Popover>
+      <span className="language-switcher-thumb" aria-hidden="true" />
+      {localeEntries.map((entry) => (
+        <a
+          key={entry.code}
+          className="language-switcher-option"
+          href={getAlternateUrl(currentPath, entry.code)}
+          hrefLang={entry.code}
+          lang={entry.code}
+          aria-label={entry.code === 'en' ? 'English' : entry.label}
+          aria-current={entry.code === locale ? 'true' : undefined}
+          data-selected={entry.code === (pendingLocale ?? locale)}
+          onClick={(event) => {
+            // Retain native links for opening another tab and for readers without JavaScript.
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            if (pendingLocale === entry.code) return;
+            if (timer.current !== null) clearTimeout(timer.current);
+            timer.current = null;
+            const link = event.currentTarget;
+            const followLink = () => {
+              timer.current = null;
+              const request = navigate(link.href, { sourceElement: link });
+              navigation.current = request;
+              const settle = () => {
+                if (navigation.current !== request) return;
+                navigation.current = null;
+                setPendingLocale(null);
+              };
+              void request.then(settle, settle);
+            };
+            // A second choice during a fetch must supersede it, even if it selects the old locale.
+            if (navigation.current !== null) {
+              setPendingLocale(entry.code);
+              followLink();
+              return;
+            }
+            if (entry.code === locale) {
+              setPendingLocale(null);
+              return;
+            }
+            setPendingLocale(entry.code);
+            // Finish the slide before Astro replaces the page (and closes the mobile drawer).
+            timer.current = setTimeout(followLink, isMotionDisabled() ? 0 : SLIDE_DURATION);
+          }}
+        >
+          {entry.code === 'en' ? 'EN' : entry.code === 'zh' ? '中文' : entry.label}
+        </a>
+      ))}
+    </nav>
   );
-};
+}
 
-const LanguageSwitcher = memo(LanguageSwitcherComponent);
-
-export default LanguageSwitcher;
+export default memo(LanguageSwitcherComponent);

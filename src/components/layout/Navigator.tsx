@@ -29,7 +29,6 @@ interface NavigatorProps {
 const filteredRouters = filterNavItems(routers, configuredSeriesSlugs, enabledSeriesSlugs, RESERVED_ROUTES);
 
 const navKey = (item: (typeof filteredRouters)[number]) => `nav:${item.name ?? item.path ?? item.nameKey ?? ''}`;
-const languageMenuKey = 'language';
 
 // Icon component for navigation items - uses @iconify/react for dynamic icons.
 // Icon data loads asynchronously (Iconify API); the fixed-size wrapper reserves
@@ -92,7 +91,7 @@ const Navigator = memo(function Navigator({ currentPath, locale = defaultLocale 
   const activeKey = activeItem ? navKey(activeItem) : null;
   const navRef = useRef<HTMLElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
-  useGlideIndicator(navRef, indicatorRef, intent ?? (openKey === languageMenuKey ? null : openKey) ?? activeKey);
+  useGlideIndicator(navRef, indicatorRef, intent ?? openKey ?? activeKey);
 
   useEffect(() => {
     // Portals live outside the persisted island; close them before Astro replaces the body.
@@ -194,13 +193,7 @@ const Navigator = memo(function Navigator({ currentPath, locale = defaultLocale 
       <div className="ml-auto flex items-center gap-2">
         <SearchTrigger />
         <div className="tablet:hidden flex-center">
-          <LanguageSwitcher
-            locale={locale}
-            open={openKey === languageMenuKey}
-            onOpenChange={(open) =>
-              setOpenKey((current) => (open ? languageMenuKey : current === languageMenuKey ? null : current))
-            }
-          />
+          <LanguageSwitcher currentPath={currentPath} />
         </div>
         <ThemeToggle locale={locale} />
       </div>

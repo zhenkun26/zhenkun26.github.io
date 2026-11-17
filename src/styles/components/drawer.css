@@ -132,66 +132,6 @@ html:is([data-motion="reduced"], .motion-off) .drawer-sheet[data-state="open"] {
   background: hsl(var(--foreground) / 0.08);
 }
 
-.drawer-locale > summary {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  height: 2.5rem;
-  padding-inline: 0.875rem 0.625rem;
-  border-radius: 9999px;
-  background: hsl(var(--foreground) / 0.05);
-  color: hsl(var(--muted-foreground));
-  font-size: 0.875rem;
-  list-style: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition:
-    background-color 200ms var(--ease-out-quart),
-    color 200ms var(--ease-out-quart);
-}
-
-.drawer-locale > summary::-webkit-details-marker {
-  display: none;
-}
-
-.drawer-locale[open] > summary {
-  background: hsl(var(--foreground) / 0.09);
-  color: hsl(var(--foreground));
-}
-
-.drawer-locale-menu {
-  position: absolute;
-  top: calc(100% + 0.375rem);
-  right: 0;
-  z-index: 10;
-  display: flex;
-  min-width: 8rem;
-  flex-direction: column;
-  padding: 0.25rem;
-  border-radius: 1rem;
-  background: hsl(var(--popover));
-  box-shadow:
-    0 0 0 1px hsl(var(--border)),
-    0 1rem 2rem -1rem rgb(40 12 32 / 0.35);
-  transform-origin: top right;
-}
-
-.drawer-locale-menu > a {
-  display: flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding-inline: 0.875rem;
-  border-radius: 0.75rem;
-  color: hsl(var(--muted-foreground));
-  font-size: 0.875rem;
-}
-
-.drawer-locale-menu > a[aria-current] {
-  background-image: var(--gradient-shoka-button);
-  color: #fff;
-  font-weight: 500;
-}
-
 /* Entrance: rows trail the sheet from the side it came from, staggered by --drawer-i (set on open). */
 @keyframes drawer-row-in {
   from {
@@ -204,17 +144,6 @@ html:is([data-motion="reduced"], .motion-off) .drawer-sheet[data-state="open"] {
   html:is([data-motion="lively"], [data-motion="subtle"]) .drawer-sheet[data-state="open"] [style*="--drawer-i"] {
     animation: drawer-row-in 620ms var(--ease-out-expo) backwards;
     animation-delay: calc(70ms + var(--drawer-i, 0) * 32ms);
-  }
-
-  html:is([data-motion="lively"], [data-motion="subtle"]) .drawer-locale[open] .drawer-locale-menu {
-    animation: drawer-menu-in 260ms var(--ease-out-expo);
-  }
-}
-
-@keyframes drawer-menu-in {
-  from {
-    opacity: 0;
-    scale: 0.94;
   }
 }
 
