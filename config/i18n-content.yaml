@@ -16,10 +16,9 @@ en:
   categories:
     life: Life
     note: Notes
-    tools: Tools
-    weekly: Weekly
-    front-end: Frontend
-    css: CSS
+    tech: Tech
+    reading: Reading
+    project: Projects
     anime: Anime
 
   series:
@@ -30,16 +29,16 @@ en:
   featuredCategories:
     life:
       label: Life
-      description: Life journals and essays
+      description: Daily life and essays
     note:
       label: Notes
-      description: Technical and study notes
-    note/front-end:
-      label: Frontend
-      description: Frontend technologies
-    tools:
-      label: Tools
-      description: Tool usage and productivity
+      description: Study notes and short notes
+    tech:
+      label: Tech
+      description: Technical articles and discussions
+    reading:
+      label: Reading
+      description: Reading notes and excerpts
 
   colophon:
     groups:

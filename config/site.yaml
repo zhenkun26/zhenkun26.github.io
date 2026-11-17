@@ -11,23 +11,23 @@
 # Site Basic Information
 # =============================================================================
 site:
-  title: 余弦の博客 # 网站名称
-  alternate: cosine # 网站英文名称 用于页脚、Logo、@ handle 等
-  subtitle: WA 的一声就哭了 # 网站副标题
-  name: cos # 作者名称 - 请修改为你的名字
-  description: 一个基于 Astro 的现代化博客主题 # 网站描述
+  title: 豫然录 # 网站名称
+  alternate: yuran # 网站英文名称 用于页脚、Logo、@ handle 等
+  subtitle: 雷出地奋，豫然成录 # 网站副标题
+  name: 裕政 # 作者名称 - 请修改为你的名字
+  description: 裕政的个人博客，记录学习、技术与生活 # 网站描述（占位，待改）
   avatar: /img/avatar.webp # 网站头像
   showLogo: false # 是否显示图形 Logo；默认显示站点名称，启用后可替换 src/assets/svg/logo.svg
-  author: Author # 作者名称 - 请修改为你的名字
-  url: https://koharu.cosine.ren # 站点 URL 用于 RSS 和 SEO
+  author: 裕政 # 作者名称 - 请修改为你的名字
+  url: https://zhenkun26.github.io # 站点 URL 用于 RSS 和 SEO
   defaultOgImage: /img/avatar.webp # 默认 Open Graph 图片
-  startYear: 2024 # 建站年份
+  startYear: 2026 # 建站年份
   timezone: Asia/Shanghai # 时区配置 (IANA 格式)，用于日期显示和处理
   keywords: # SEO 关键词 (全局)
     - 博客
-    - Astro
+    - 豫然录
     - 技术
-    - 前端
+    - 生活
     # 请根据你的网站内容添加关键词
   # breadcrumbHome: 首页  # 面包屑导航中首页的显示名称（默认: '首页'）
   # icp:                         # ICP 备案号（可自定义链接）
@@ -56,8 +56,10 @@ i18n:
       # enabled: false  # 内容存在但暂时禁用（保留内容但不生成路由）
     - code: ja
       label: 日本語
+      enabled: false
     - code: ko
       label: 한국어
+      enabled: false
 
 # =============================================================================
 # Category Map
@@ -68,17 +70,15 @@ categoryMap:
   # Primary categories
   随笔: life
   笔记: note
-  工具: tools
-  周刊: weekly
+  技术: tech
+  读书: reading
+  项目: project
+  周刊: weekly # 周刊系列（目前关闭）
   # Secondary categories (for nested paths)
-  前端: front-end
-  CSS: css
   番剧: anime
   # Add more as needed:
-  # 书摘: reading
   # 后端: back-end
   # 算法: algorithm
-  # 项目: project
 
 # =============================================================================
 # Featured Categories (Homepage)
@@ -91,22 +91,22 @@ categoryMap:
 #   description: 分类描述文字，显示在卡片上
 # -----------------------------------------------------------------------------
 featuredCategories:
-  - link: life # 对应 categoryMap 中 随笔: life
+  - link: life
     label: 随笔
     image: /img/cover/2.webp
-    description: 生活记录、随想随笔
-  - link: note # 对应 categoryMap 中 笔记: note
+    description: 日常与生活随笔
+  - link: note
     label: 笔记
     image: /img/cover/4.webp
-    description: 技术笔记、学习笔记
-  - link: note/front-end # 嵌套分类：笔记/前端
-    label: 前端
+    description: 学习笔记、短笔记
+  - link: tech
+    label: 技术
     image: /img/cover/1.webp
-    description: 前端技术相关
-  - link: tools # 对应 categoryMap 中 工具: tools
-    label: 工具
+    description: 技术文章与讨论
+  - link: reading
+    label: 读书
     image: /img/cover/11.webp
-    description: 工具使用、效率提升
+    description: 读书笔记与书摘
 
 # =============================================================================
 # Featured Series
@@ -135,10 +135,10 @@ featuredSeries:
       你可以用它来发布定期更新的系列内容，如技术周刊、读书笔记系列等。
       设置 enabled: false 可以关闭此功能。
     cover: /img/weekly_header.webp # 系列页面头图
-    enabled: true # 启用此系列
+    enabled: false # 启用此系列（暂无周刊，先关闭）
     icon: ri:newspaper-line # 导航图标
     links: # 相关链接（可选）
-      github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
+      # github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
       rss: /rss.xml # (可选) RSS 订阅链接
       # chrome: https://chromewebstore.google.com/detail/your-extension-id # (可选) 浏览器插件
       # docs: https://your-docs-url # (可选) 文档链接
@@ -166,17 +166,17 @@ featuredSeries:
 # -----------------------------------------------------------------------------
 social:
   github:
-    url: https://github.com/your-username # 替换为你的 GitHub 链接
+    url: https://github.com/zhenkun26
     icon: ri:github-fill # Remix Icon 的 GitHub 图标
     color: '#191717' # (可选) 图标颜色
-  email:
-    url: mailto:your@email.com # 替换为你的邮箱，需加 mailto: 前缀
-    icon: ri:mail-line
-    color: '#55acd5'
-  rss:
-    url: /rss.xml # 站内 RSS 订阅地址
-    icon: ri:rss-line
-    color: '#ff6600'
+  # email:
+  #   url: mailto:your@email.com # 替换为你的邮箱，需加 mailto: 前缀
+  #   icon: ri:mail-line
+  #   color: '#55acd5'
+  # rss:
+  #   url: /rss.xml # 站内 RSS 订阅地址
+  #   icon: ri:rss-line
+  #   color: '#ff6600'
   # -------------------------------------------------------------------------
   # 以下是更多可选的社交平台配置示例，取消注释并修改即可启用：
   # -------------------------------------------------------------------------
@@ -247,59 +247,10 @@ friends:
     - site: 余弦の博客
       url: https://blog.cosine.ren
       owner: cos
-      desc: FE / ACG / 手工 / 深色模式强迫症 / INFP / 兴趣广泛养两只猫的老宅女 / remote
+      desc: astro-koharu 主题作者
       image: https://blog.cosine.ren/img/avatar.webp
-      color: '#ed788b'
-      group: familiar
-    - site: 示例博客 A
-      url: https://example-a.com
-      owner: Alice
-      desc: 一个热爱技术的开发者
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Alice
-      color: '#BEDCFF'
-      group: familiar
-    - site: 示例博客 B
-      url: https://example-b.com
-      owner: Bob
-      desc: 分享生活与技术的小站
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Bob
-      color: '#FBC1CC'
-      group: community
-    - site: 示例博客 C
-      url: https://example-c.com
-      owner: Carol
-      desc: 记录学习与成长的地方
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Carol
-      color: '#ABDCFF'
-      group: community
-    - site: 示例博客 D
-      url: https://example-d.com
-      owner: Dave
-      desc: 喜欢折腾键盘和终端
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Dave
-      color: '#C8E6C9'
-      group: community
-    - site: 示例博客 E
-      url: https://example-e.com
-      owner: Eve
-      desc: 设计、插画与日常碎碎念
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Eve
-      color: '#E1BEE7'
+      color: '#ffc0cb'
       group: following
-    - site: 示例博客 F
-      url: https://example-f.com
-      owner: Frank
-      desc: 长文写作与阅读笔记
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Frank
-      color: '#FFE0B2'
-      group: following
-    # 不写 group（或写了不存在的分组 id）的友链会归入最后的「未分组」
-    - site: 示例博客 G
-      url: https://example-g.com
-      owner: Grace
-      desc: 还没想好放在哪一组的新朋友
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Grace
-      color: '#B2EBF2'
 
 # =============================================================================
 # Announcements
@@ -579,10 +530,10 @@ navigation:
     icon: ri:home-heart-fill # 图标
   # - name: 书摘
   #   path: /reading
-  - name: 周刊
-    nameKey: nav.weekly
-    path: /weekly
-    icon: ri:newspaper-line
+  # - name: 周刊
+  #   nameKey: nav.weekly
+  #   path: /weekly
+  #   icon: ri:newspaper-line
   # Optional explicit Moments position. When omitted, enabled Moments is inserted after Archives.
   # - feature: moments
   #   icon: ri:chat-smile-3-fill
@@ -610,10 +561,10 @@ navigation:
     nameKey: nav.about
     path: /about
     icon: fa6-regular:circle-user
-  - name: 歌单
-    nameKey: nav.music
-    path: /music
-    icon: ri:music-2-fill
+  # - name: 歌单
+  #   nameKey: nav.music
+  #   path: /music
+  #   icon: ri:music-2-fill
   - name: 写作室
     path: /editor
     localeIndependent: true
@@ -806,15 +757,12 @@ seo:
 # Christmas/Seasonal Features
 # =============================================================================
 bgm:
-  enabled: true  # (有 audio 时自动启用，显式 false 可禁用)
+  enabled: false  # (有 audio 时自动启用，显式 false 可禁用)
   # metingApi: https://163.hyc.moe/  # Meting API 地址，默认为 https://163.hyc.moe/，推荐自部署
-  audio:
-    - title: 最爱山山
-      list:
-        - https://music.163.com/playlist?id=8676645748
-    - title: Love Vocaloid
-      list:
-        - https://music.163.com/playlist?id=8882890045
+  audio: []
+  #   - title: 我的歌单
+  #     list:
+  #       - https://music.163.com/playlist?id=你的歌单ID
 
 christmas:
   enabled: false # 总开关
@@ -842,8 +790,8 @@ christmas:
 #   label: 导航显示名称（可选，默认：追番）
 #   icon: 导航图标，Iconify 格式（可选，默认：ri:bilibili-fill）
 # -----------------------------------------------------------------------------
-bangumi:
-  userId: cosine
+# bangumi:
+#   userId: 你的 Bangumi 用户名
   # label: 追番
   # icon: ri:bilibili-fill
 
