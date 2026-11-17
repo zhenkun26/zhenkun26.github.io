@@ -20,6 +20,7 @@ export interface LocaleContentTranslations {
     title?: string;
     name?: string;
     subtitle?: string;
+    keywords?: string[];
     description?: string;
   };
   colophon?: ColophonContentTranslation;

@@ -94,7 +94,7 @@ export function ModalLayer({
             <m.div className={cn('fixed inset-0 z-60', layerClassName)}>
               {/* Only the backdrop fades as a whole; the content owns its own entrance and exit. */}
               <m.div
-                className={cn('fixed inset-0 backdrop-blur-sm', backdropClassName ?? 'bg-[rgb(18_10_26/0.72)]')}
+                className={cn('fixed inset-0 backdrop-blur-sm', backdropClassName ?? 'bg-[hsl(var(--brand-scrim)/0.72)]')}
                 initial={shouldReduceMotion ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{

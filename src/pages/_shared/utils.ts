@@ -74,10 +74,7 @@ const PAGE_MODULES = import.meta.glob('/src/pages/**/*.{astro,md,mdx,ts}');
 
 /** Root routes that intentionally have no `[lang]/` mirror. */
 const MIRROR_EXEMPT = new Set([
-  // Static hosts serve a single /404.html; the page localizes itself at runtime.
-  '404',
-  // Locale-agnostic RSS and embedded-comment stylesheets.
-  'rss/feed.xsl',
+  // The embedded-comment stylesheet is shared by every locale.
   'theme/giscus-[mode].css',
   // The first editor release is one shared Chinese workbench, including its preview frame.
   'editor/index',

@@ -341,7 +341,6 @@ $$
   owner: cos
   desc: FE / ACG / 手工
   image: https://blog.cosine.ren/img/avatar.webp
-  color: '#ed788b'
 - site: 示例博客
   url: https://example.com
   owner: Alice
@@ -357,7 +356,6 @@ $$
   owner: cos
   desc: FE / ACG / 手工
   image: https://blog.cosine.ren/img/avatar.webp
-  color: '#ed788b'
 - site: 示例博客
   url: https://example.com
   owner: Alice

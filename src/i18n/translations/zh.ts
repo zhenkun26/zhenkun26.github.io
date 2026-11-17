@@ -61,6 +61,9 @@ export const uiStrings = {
   'common.menuLabel': '{name}菜单',
 
   // ── Post ────────────────────────────────────────────────────
+  'post.readingProgress': '阅读进度',
+  'rss.visitSite': '访问网站',
+  'rss.latest': '最近更新',
   'post.readMore': '阅读全文',
   'post.totalPosts': '共 {count} 篇文章',
   'post.stickyPosts': '置顶文章',
@@ -185,6 +188,9 @@ export const uiStrings = {
   'diagram.gestureHint': '双指捏合或滚轮缩放 · 拖动平移 · 双击放大',
 
   // ── Image Lightbox ──────────────────────────────────────────
+  'image.unnamed': '图片',
+  'image.fullscreen': '全屏查看',
+  'image.previewFailed': '预览图片加载失败',
   'image.preview': '图片预览',
   'image.loadError': '图片加载失败',
   'image.retry': '重试',
@@ -249,6 +255,12 @@ export const uiStrings = {
   'floating.backToTop': '回到顶部',
   'floating.scrollToBottom': '滚到底部',
   'floating.toggleTheme': '切换主题',
+  'christmas.disable': '关闭圣诞模式',
+  'christmas.enable': '开启圣诞模式',
+  'christmas.tapOff': '点击关闭',
+  'christmas.tapOn': '点击开启',
+  'christmas.pullOff': '下拉关闭',
+  'christmas.pullOn': '下拉开启',
   'floating.christmas': '切换圣诞特效',
   'floating.bgm': '背景音乐',
   'floating.toggleToolbar': '展开/收起工具栏',

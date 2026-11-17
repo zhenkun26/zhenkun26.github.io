@@ -37,7 +37,7 @@ import { Icon } from 'astro-icon/components';
 import { Comment } from '@/components/comment';
 import PostMarkdownActions from '@/components/post/PostMarkdownActions';
 import { defaultLocale, getLocaleLabel, localizedPath, t } from '@/i18n';
-import { getContentSite } from '@/i18n/content';
+import { getContentSite, getContentTagName } from '@/i18n/content';
 import { extractTextFromMarkdown } from '@/lib/sanitize';
 import { postRoute } from '../_shared/routes';
 
@@ -79,9 +79,12 @@ const finalDescription = getPostDescription(post, locale);
 // OGP image for BlogPosting schema (uses same fallback chain as Layout)
 const ogImage = getOgImageUrl(post?.data.cover, Astro.site);
 
-const categoryKeywords = categories?.length ? categories.flat() : [];
-const postKw = postKeywords?.length ? postKeywords : [...tags, ...categoryKeywords];
-const keywords = [...new Set([...postKw, ...(siteConfig.keywords ?? [])])] as string[];
+const siteCopy = getContentSite(locale);
+const categoryKeywords = categories.flat().map((category) => translateCategoryName(category, locale));
+const postKw = postKeywords?.length
+  ? postKeywords
+  : [...tags.map((tag) => getContentTagName(locale, tag)), ...categoryKeywords];
+const keywords = [...new Set([...postKw, ...(siteCopy?.keywords ?? siteConfig.keywords ?? [])])] as string[];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -90,7 +93,7 @@ const jsonLd = {
   keywords,
   author: {
     '@type': 'Person',
-    name: siteConfig.author ?? siteConfig.name,
+    name: siteCopy?.name ?? siteConfig.author ?? siteConfig.name,
     url: Astro.site,
   },
   datePublished: formatForSeo(date),
@@ -185,7 +188,7 @@ if (post.data.description) {
 
 <Layout
   locale={locale}
-  title={`${post.data.title}${categoryStr} | ${(getContentSite(locale)?.title ?? siteConfig.title)}`}
+  title={`${post.data.title}${categoryStr} | ${(siteCopy?.title ?? siteConfig.title)}`}
   description={finalDescription}
   siderType={HomeSiderType.POST}
   post={post}

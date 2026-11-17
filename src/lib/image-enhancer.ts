@@ -6,7 +6,9 @@
  * Its lightweight modal store preserves clicks while the viewer is still loading.
  */
 
+import { $locale } from '@store/locale';
 import { openModal } from '@store/modal';
+import { t } from '@/i18n/utils';
 import { containBox, type LightboxOrigin } from './lightbox-flip';
 
 type LightboxImage = { src: string; alt: string; origin?: LightboxOrigin };
@@ -21,8 +23,8 @@ function createFullscreenButton(): HTMLButtonElement {
   const button = document.createElement('button');
   button.className = 'markdown-image-fullscreen';
   button.setAttribute('type', 'button');
-  button.setAttribute('aria-label', '全屏查看');
-  button.title = '全屏查看';
+  button.title = t($locale.get(), 'image.fullscreen');
+  button.setAttribute('aria-label', button.title);
   button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>`;
   return button;
 }
@@ -34,7 +36,8 @@ function createErrorPlaceholder(img: HTMLImageElement): HTMLElement {
   const placeholder = document.createElement('div');
   placeholder.className = 'markdown-image-error';
   placeholder.setAttribute('role', 'img');
-  placeholder.setAttribute('aria-label', img.alt ? `图片加载失败: ${img.alt}` : '图片加载失败');
+  const message = t($locale.get(), 'image.loadError');
+  placeholder.setAttribute('aria-label', img.alt ? `${message}: ${img.alt}` : message);
 
   const icon = document.createElement('span');
   icon.className = 'markdown-image-error-icon';
@@ -42,7 +45,7 @@ function createErrorPlaceholder(img: HTMLImageElement): HTMLElement {
 
   const text = document.createElement('span');
   text.className = 'markdown-image-error-text';
-  text.textContent = '图片加载失败';
+  text.textContent = message;
 
   placeholder.appendChild(icon);
   placeholder.appendChild(text);
@@ -88,7 +91,11 @@ function handleImageClick(e: Event): void {
   // Collect all loaded images from the nearest content container
   const container = img.closest('.custom-content') ?? document.body;
   const allImages = Array.from(container.querySelectorAll<HTMLImageElement>('.markdown-image.loaded'));
-  const images = allImages.map((i) => ({ src: i.src, alt: i.alt || '图片', origin: measureOrigin(i) }));
+  const images = allImages.map((i) => ({
+    src: i.src,
+    alt: i.alt || t($locale.get(), 'image.unnamed'),
+    origin: measureOrigin(i),
+  }));
   const currentIndex = Math.max(0, allImages.indexOf(img));
 
   // Give the focus manager a stable return target when the image itself was clicked.
@@ -96,7 +103,7 @@ function handleImageClick(e: Event): void {
     .closest('.markdown-image-wrapper')
     ?.querySelector<HTMLButtonElement>('.markdown-image-fullscreen')
     ?.focus({ preventScroll: true });
-  openImageLightbox(img.src, img.alt || '图片', images, currentIndex);
+  openImageLightbox(img.src, img.alt || t($locale.get(), 'image.unnamed'), images, currentIndex);
 }
 
 export function enhanceImages(container: Element): () => void {

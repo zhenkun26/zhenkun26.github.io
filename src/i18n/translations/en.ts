@@ -62,6 +62,9 @@ export const uiStrings: UIStrings = {
   'common.menuLabel': '{name} menu',
 
   // ── Post ────────────────────────────────────────────────────
+  'post.readingProgress': 'Reading progress',
+  'rss.visitSite': 'Visit website',
+  'rss.latest': 'Latest posts',
   'post.readMore': 'Read more',
   'post.totalPosts': '{count} posts',
   'post.stickyPosts': 'Pinned Posts',
@@ -186,6 +189,9 @@ export const uiStrings: UIStrings = {
   'diagram.gestureHint': 'Pinch or scroll wheel to zoom · Drag to pan · Double-click to zoom in',
 
   // ── Image Lightbox ──────────────────────────────────────────
+  'image.unnamed': 'Image',
+  'image.fullscreen': 'View full screen',
+  'image.previewFailed': 'Preview image failed to load',
   'image.preview': 'Image preview',
   'image.loadError': 'This image could not be loaded',
   'image.retry': 'Retry',
@@ -250,6 +256,12 @@ export const uiStrings: UIStrings = {
   'floating.backToTop': 'Back Top',
   'floating.scrollToBottom': 'Scroll Bottom',
   'floating.toggleTheme': 'Toggle theme',
+  'christmas.disable': 'Turn off Christmas mode',
+  'christmas.enable': 'Turn on Christmas mode',
+  'christmas.tapOff': 'Tap to turn off',
+  'christmas.tapOn': 'Tap to turn on',
+  'christmas.pullOff': 'Pull to turn off',
+  'christmas.pullOn': 'Pull to turn on',
   'floating.christmas': 'Toggle Christmas effects',
   'floating.bgm': 'Background music',
   'floating.toggleToolbar': 'Toggle toolbar',

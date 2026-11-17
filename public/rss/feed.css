@@ -288,34 +288,11 @@ body {
   border: 1px solid transparent;
 }
 
-.social-btn:hover {
+.social-btn:is(:hover, :focus-visible) {
   transform: translateY(-3px) scale(1.1);
-  color: white;
-}
-
-.social-btn.github:hover {
-  background: #333;
-  border-color: #666;
-}
-.social-btn.bilibili:hover {
-  background: #da708a;
-  border-color: #fca5bf;
-}
-.social-btn.music:hover {
-  background: #e60026;
-  border-color: #ff4d6a;
-}
-.social-btn.email:hover {
-  background: #55acd5;
-  border-color: #8fdcf9;
-}
-.social-btn.twitter:hover {
-  background: #1da1f2;
-  border-color: #69caff;
-}
-.social-btn.rss:hover {
-  background: #ff6600;
-  border-color: #ff9955;
+  background: var(--feed-accent);
+  border-color: var(--feed-hover);
+  color: hsl(var(--primary-foreground));
 }
 
 /* Feed Actions - Condensed & Styled */

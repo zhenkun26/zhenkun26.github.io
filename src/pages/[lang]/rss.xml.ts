@@ -1,11 +1,12 @@
 import rss from '@astrojs/rss';
 import { siteConfig } from '@constants/site-config';
-import { getCategoryArr, getPostSlug, getSortedPosts } from '@lib/content';
+import { getCategoryArr, getPostSlug, getSortedPosts, translateCategoryName } from '@lib/content';
 import { encodeSlug } from '@lib/route';
 import { buildRssItemFields } from '@lib/rss-utils';
 import type { APIContext } from 'astro';
 import type { BlogPost } from 'types/blog';
 import { getHtmlLang, localizedPath } from '@/i18n';
+import { getContentSite, getContentTagName } from '@/i18n/content';
 import { getLocaleStaticPaths } from '../_shared/utils';
 
 export const getStaticPaths = getLocaleStaticPaths;
@@ -19,18 +20,19 @@ export async function GET(context: APIContext) {
     throw new Error('Missing site metadata');
   }
 
+  const copy = getContentSite(lang);
   const response = await rss({
-    title: siteConfig.title,
-    description: siteConfig.subtitle || 'No description',
-    site,
+    title: copy?.title ?? siteConfig.title,
+    description: copy?.subtitle ?? (siteConfig.subtitle || 'No description'),
+    site: new URL(localizedPath('/', lang), site),
     trailingSlash: false,
     customData: `<language>${getHtmlLang(lang)}</language>`,
-    stylesheet: '/rss/feed.xsl',
+    stylesheet: localizedPath('/rss/feed.xsl', lang),
     items: posts.slice(0, 20).map((post: BlogPost) => {
       const categoryArr = getCategoryArr(post.data.categories?.[0]);
       const categories = [
-        ...(categoryArr || []).map((cat) => `category:${cat}`),
-        ...(post.data.tags || []).map((tag) => `tag:${tag}`),
+        ...(categoryArr || []).map((cat) => `category:${translateCategoryName(cat, lang)}`),
+        ...(post.data.tags || []).map((tag) => `tag:${getContentTagName(lang, tag)}`),
       ];
 
       const postSlug = getPostSlug(post);

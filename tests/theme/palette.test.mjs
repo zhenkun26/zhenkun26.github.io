@@ -70,12 +70,13 @@ function sourceFiles(directory) {
 test('UI sources do not reintroduce the former literal sakura brand palette', () => {
   // Named Markdown colors, status colors, Christmas ornaments and artwork are intentional.
   const oldBrand =
-    /#(?:e9546[b9]|e9536a|ed788[cb]|ed6ea0|ec8c69|f18bb3|f0a387|ffc0cb|ffc5d4|ef7396|ed719a|ffacde|fbd7ed)\b|rgb\(233 84 107\b/i;
+    /#(?:e9546[b9]|e9536a|ed788[cb]|ed6ea0|ec8c69|f18bb3|f0a387|ffc0cb|ffc5d4|ef7396|ed719a|ffacde|fbd7ed)\b|rgba?\(233[\s_,]+84[\s_,]+107\b/i;
   for (const directory of ['src', 'config', 'public/theme', 'public/rss']) {
     for (const path of sourceFiles(resolve(root, directory))) {
       if (path.endsWith('.test.ts') || path.endsWith('/utils.ts')) continue;
       assert.doesNotMatch(readFileSync(path, 'utf8'), oldBrand, path);
     }
   }
+  assert.doesNotMatch(readFileSync(resolve(root, 'src/features/editor/shoka-example.md'), 'utf8'), oldBrand);
   assert.doesNotMatch(readFileSync(resolve(root, 'tailwind.config.mjs'), 'utf8'), oldBrand);
 });

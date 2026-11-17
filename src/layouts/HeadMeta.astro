@@ -34,7 +34,7 @@ const ogDescription = openGraph?.description ?? description;
 const canonicalHref = meta.canonical ?? Astro.url.href;
 const ogUrl = resolveAbsoluteUrl(openGraph?.url) ?? canonicalHref;
 
-const keywords = meta.keywords || siteConfig.keywords || [siteCopy?.title ?? siteConfig.title];
+const keywords = meta.keywords ?? siteCopy?.keywords ?? siteConfig.keywords ?? [siteCopy?.title ?? siteConfig.title];
 const rssFeeds = meta.rssFeeds ?? [
   { href: new URL(localizedPath('/rss.xml', locale), Astro.site).href, title: siteCopy?.title ?? siteConfig.title },
 ];

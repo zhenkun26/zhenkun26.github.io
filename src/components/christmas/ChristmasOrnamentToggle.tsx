@@ -1,6 +1,7 @@
 import { LazyMotionProvider } from '@components/common/LazyMotionProvider';
 import { useIsMounted } from '@hooks/useIsMounted';
 import { useMotionLevel } from '@hooks/useMotionLevel';
+import { useTranslation } from '@hooks/useTranslation';
 import { cn } from '@lib/utils';
 import { useStore } from '@nanostores/react';
 import { christmasEnabled, disableChristmas, ornamentHidden, toggleChristmas } from '@store/christmas';
@@ -172,6 +173,7 @@ function getInitialState() {
 }
 
 export function ChristmasOrnamentToggle() {
+  const { t } = useTranslation();
   const storeValue = useStore(christmasEnabled);
   const isOrnamentHidden = useStore(ornamentHidden);
   const shouldReduceMotion = useMotionLevel() === 'reduced';
@@ -254,7 +256,7 @@ export function ChristmasOrnamentToggle() {
               whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              aria-label={isEnabled ? '关闭圣诞模式' : '开启圣诞模式'}
+              aria-label={t(isEnabled ? 'christmas.disable' : 'christmas.enable')}
               aria-pressed={isEnabled}
               type="button"
             >
@@ -273,7 +275,9 @@ export function ChristmasOrnamentToggle() {
                     className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2"
                   >
                     <div className="whitespace-nowrap rounded-full border border-white/10 bg-red-950/90 px-3 py-1 font-medium text-[10px] text-white shadow-md">
-                      {shouldReduceMotion ? (isEnabled ? '点击关闭' : '点击开启') : isEnabled ? '下拉关闭' : '下拉开启'}
+                      {shouldReduceMotion
+                        ? t(isEnabled ? 'christmas.tapOff' : 'christmas.tapOn')
+                        : t(isEnabled ? 'christmas.pullOff' : 'christmas.pullOn')}
                     </div>
                   </m.div>
                 )}

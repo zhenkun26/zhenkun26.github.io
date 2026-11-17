@@ -254,7 +254,9 @@ export default defineConfig({
       },
     },
     react(),
-    sitemap(),
+    sitemap({
+      filter: (url) => !enabledI18nLocales.some((locale) => new URL(url).pathname === `/${locale}/404/`),
+    }),
     icon({
       include: Object.fromEntries(BUNDLED_ICON_SETS.map((set) => [set, ['*']])),
     }),

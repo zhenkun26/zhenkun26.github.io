@@ -143,7 +143,7 @@ export default function ImageLightbox() {
       ariaLabel={t('image.preview')}
       layerClassName="z-[60]"
       className="touch-none overflow-hidden overscroll-none"
-      backdropClassName="bg-[rgb(12_6_18/0.92)]"
+      backdropClassName="bg-[hsl(var(--brand-scrim)/0.92)]"
     >
       <m.div
         data-no-petals=""

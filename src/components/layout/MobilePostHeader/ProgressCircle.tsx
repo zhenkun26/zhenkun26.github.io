@@ -5,6 +5,7 @@ import { type MotionValue, m, useScroll, useSpring, useTransform } from 'motion/
 import { useId } from 'react';
 
 interface ProgressCircleProps {
+  label: string;
   /** Circle size in pixels (default: 28) */
   size?: number;
   /** Stroke width in pixels (default: 2) */
@@ -17,7 +18,7 @@ interface CircleDrawingProps extends ProgressCircleProps {
   progress: MotionValue<number>;
 }
 
-function ProgressCircleDrawing({ size = 28, strokeWidth = 2, className, progress }: CircleDrawingProps) {
+function ProgressCircleDrawing({ size = 28, strokeWidth = 2, className, progress, label }: CircleDrawingProps) {
   const gradientId = `progress-thread-${useId().replace(/[^\w-]/g, '')}`;
   const radius = (size - strokeWidth) / 2;
   const center = size / 2;
@@ -30,7 +31,7 @@ function ProgressCircleDrawing({ size = 28, strokeWidth = 2, className, progress
       width={size}
       height={size}
       className={className}
-      aria-label="阅读进度"
+      aria-label={label}
       role="progressbar"
       style={{ transform: 'rotate(-90deg)' }}
     >

@@ -3,6 +3,9 @@
  * Handles image load failures by showing graceful fallback UI
  */
 
+import { $locale } from '@store/locale';
+import { t } from '@/i18n/utils';
+
 const enhancedImages = new WeakSet<HTMLImageElement>();
 
 /**
@@ -12,7 +15,7 @@ function createErrorPlaceholder(title: string): HTMLElement {
   const placeholder = document.createElement('div');
   placeholder.className = 'link-preview-image-error';
   placeholder.setAttribute('role', 'img');
-  placeholder.setAttribute('aria-label', `预览图片加载失败: ${title}`);
+  placeholder.setAttribute('aria-label', `${t($locale.get(), 'image.previewFailed')}: ${title}`);
 
   // Icon
   const icon = document.createElement('span');
@@ -22,7 +25,7 @@ function createErrorPlaceholder(title: string): HTMLElement {
   // Text
   const text = document.createElement('span');
   text.className = 'link-preview-image-error-text';
-  text.textContent = '图片加载失败';
+  text.textContent = t($locale.get(), 'image.loadError');
 
   placeholder.appendChild(icon);
   placeholder.appendChild(text);
@@ -37,7 +40,7 @@ function handleImageError(img: HTMLImageElement): void {
   img.classList.add('error');
 
   // Get fallback title from data attribute
-  const title = img.getAttribute('data-fallback-title') || '预览';
+  const title = img.getAttribute('data-fallback-title') || t($locale.get(), 'image.preview');
 
   // Add error placeholder
   const imageContainer = img.parentElement;

@@ -1,27 +1,30 @@
 import { siteConfig, socialConfig } from '@constants/site-config';
-import type { APIContext } from 'astro';
+import { escapeHtml } from '@lib/markdown/shoka-renderers';
 import { capitalize } from 'es-toolkit';
+import { defaultLocale, getHtmlLang, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 
 // Convert icon format: ri:github-fill -> ri-github-fill (Remix Icon CDN uses dash)
 const toRemixIconClass = (icon: string) => icon.replace(':', '-');
 
-export async function GET(_context: APIContext) {
+export function renderFeedStylesheet(locale: string) {
+  const copy = getContentSite(locale);
   const socialLinks = Object.entries(socialConfig)
     .map(
       ([key, config]) =>
-        `<a href="${config.url}" target="_blank" class="social-btn ${key}" title="${capitalize(key)}">
-                                                        <i class="${toRemixIconClass(config.icon)}"></i>
+        `<a href="${escapeHtml(config.url)}" target="_blank" class="social-btn ${escapeHtml(key)}" title="${escapeHtml(capitalize(key))}">
+                                                        <i class="${escapeHtml(toRemixIconClass(config.icon))}"></i>
                                                     </a>`,
     )
     .join('\n                                                    ');
 
   const xsl = `<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
     <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes" />
     <xsl:template match="/">
-        <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" class="dark">
+        <html xmlns="http://www.w3.org/1999/xhtml" lang="${escapeHtml(getHtmlLang(locale))}" class="dark">
             <head>
                 <title><xsl:value-of select="/rss/channel/title" /> - RSS Feed</title>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,16 +50,16 @@ export async function GET(_context: APIContext) {
                         <div class="profile-card">
                             <div class="avatar-wrapper">
                                 <div class="avatar-container">
-                                    <img src="${siteConfig.avatar}" alt="${siteConfig.name}" class="avatar" />
+                                    <img src="${escapeHtml(siteConfig.avatar ?? '')}" alt="${escapeHtml(copy?.name ?? siteConfig.name)}" class="avatar" />
                                     <div class="cat-ear left"></div>
                                     <div class="cat-ear right"></div>
                                 </div>
                             </div>
 
                             <div class="profile-info">
-                                <h1 class="site-title">${siteConfig.title}</h1>
-                                <p class="site-subtitle">${siteConfig.subtitle}</p>
-                                <p class="site-bio">${siteConfig.description}</p>
+                                <h1 class="site-title">${escapeHtml(copy?.title ?? siteConfig.title)}</h1>
+                                <p class="site-subtitle">${escapeHtml(copy?.subtitle ?? siteConfig.subtitle ?? '')}</p>
+                                <p class="site-bio">${escapeHtml(copy?.description ?? siteConfig.description ?? '')}</p>
 
                                 <div class="social-links">
                                                     ${socialLinks}
@@ -70,7 +73,7 @@ export async function GET(_context: APIContext) {
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="/rss/channel/link" />
                                     </xsl:attribute>
-    访问网站 <i class="ri-arrow-right-line"></i>
+    ${t(locale, 'rss.visitSite')} <i class="ri-arrow-right-line"></i>
                                 </a>
                             </div>
                         </div>
@@ -78,7 +81,7 @@ export async function GET(_context: APIContext) {
 
                     <main class="feed-content">
                         <div class="content-header">
-                            <h2><i class="ri-sparkling-fill"></i> 最近更新</h2>
+                            <h2><i class="ri-sparkling-fill"></i> ${t(locale, 'rss.latest')}</h2>
                             <p class="feed-desc">
                                 <xsl:value-of select="/rss/channel/description" />
                             </p>
@@ -133,7 +136,7 @@ export async function GET(_context: APIContext) {
                                             <xsl:attribute name="href">
                                                 <xsl:value-of select="link" />
                                             </xsl:attribute>
-    阅读全文 <i class="ri-arrow-right-s-line"></i>
+    ${t(locale, 'post.readMore')} <i class="ri-arrow-right-s-line"></i>
                                         </a>
                                     </div>
                                 </article>
@@ -142,7 +145,7 @@ export async function GET(_context: APIContext) {
                     </main>
 
                     <footer class="page-footer">
-                        <p>Designed with <i class="ri-heart-3-fill heart-beat"></i> by ${siteConfig.author}</p>
+                        <p>Designed with <i class="ri-heart-3-fill heart-beat"></i> by ${escapeHtml(copy?.name ?? siteConfig.author ?? siteConfig.name)}</p>
                         <p class="copyright">
                             <a href="https://aboutfeeds.com" target="_blank">About Feeds</a>
                         </p>
@@ -159,4 +162,8 @@ export async function GET(_context: APIContext) {
       'Content-Type': 'application/xslt+xml; charset=utf-8',
     },
   });
+}
+
+export function GET() {
+  return renderFeedStylesheet(defaultLocale);
 }

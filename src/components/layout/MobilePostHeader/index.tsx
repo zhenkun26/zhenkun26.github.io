@@ -15,7 +15,6 @@ import { useTranslation } from '@hooks/useTranslation';
 import { chapterIndexOf, findHeadingById, flattenHeadings } from '@lib/toc';
 import { m } from 'motion/react';
 import { useMemo, useState } from 'react';
-import { siteConfig } from '@/constants/site-config';
 import { localizedPath } from '@/i18n';
 import { HeadingTitle } from './HeadingTitle';
 import { MobileTOCDropdown } from './MobileTOCDropdown';
@@ -48,7 +47,7 @@ function Logo({
   return (
     <a href={localizedPath('/', locale)} className="flex items-center gap-1">
       {logoElement === 'svg' && logoSrc ? (
-        <img src={logoSrc} alt={siteConfig?.alternate ?? siteConfig?.name} className="h-8 w-auto" width={448} height={153} />
+        <img src={logoSrc} alt={logoText} className="h-8 w-auto" width={448} height={153} />
       ) : (
         <span className="logo-text">{logoText}</span>
       )}
@@ -123,7 +122,7 @@ export function MobilePostHeader({
                   >
                     {/* Progress circle - fixed size container, with the current chapter number inside */}
                     <div className="relative shrink-0">
-                      <ProgressCircle size={32} strokeWidth={2.5} />
+                      <ProgressCircle label={t('post.readingProgress')} size={32} strokeWidth={2.5} />
                       {enableNumbering && chapter > 0 && (
                         <span
                           aria-hidden="true"
