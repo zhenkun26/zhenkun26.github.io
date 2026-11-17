@@ -18,11 +18,13 @@ Some entries will be full articles; others may be a short note or something I le
 
 ### Behind the name
 
-The name *Yuran* carries a sense of joy and ease. The blog's motto expresses the spirit I want to bring to this space:
+The *Yu* in *Yuran* comes from [Hexagram 16 of the *I Ching*](https://www.yellowbridge.com/onlinelit/yijing16.php?characterMode=t), the *Book of Changes*. Its image is thunder above earth: Zhen, the stirring thunder, over Kun, the receptive earth.
+
+For me, this image holds a way of learning and living: receptive within, alive in motion. The earth makes room; thunder stirs things into life. I want to stay open to what each moment brings, act when the time is right, and find joy in the doing.
+
+These pages keep a record of that movement: a question followed, an idea tried, a small discovery worth sharing. That is the spirit behind the blog's motto:
 
 > Where joy prevails, the record endures; where peace abides, the way unfolds.
-
-For me, it is a reminder to enjoy the process of learning, put experiences into words, and move forward with a calm mind.
 
 ### Languages
 

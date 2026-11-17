@@ -13,6 +13,8 @@ categories:
 
 Hi, this is Yuzheng.
 
-"Yuran" (豫然录) comes from the line "Thunder bursts from the earth; a record takes shape in ease." This blog is where I write about learning, tech, daily life and random thoughts.
+The *Yu* in *Yuran* comes from Hexagram 16 of the *I Ching*: thunder above earth. For me, the image joins the earth's openness with thunder's energy: staying receptive within, moving when the moment calls, and finding joy in the doing.
+
+This blog is where I put that spirit into words, through learning, technical explorations, everyday life, and small discoveries. Read more [about the name and this blog](/en/about/).
 
 <!-- TODO: write about why I started this blog -->
