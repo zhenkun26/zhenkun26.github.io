@@ -1,6 +1,18 @@
 ---
+import { Content, frontmatter } from '@/content/pages/about.en.md';
+import PageLayout from '@/layouts/PageLayout.astro';
 import { getLocaleStaticPaths } from '../_shared/utils';
-import AboutPage from '../about.md';
 export const getStaticPaths = getLocaleStaticPaths;
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
 ---
-<AboutPage />
+<PageLayout
+  locale={locale}
+  frontmatter={{ title: frontmatter.title, coverTitle: frontmatter.coverTitle, description: frontmatter.description }}
+>
+  <Content />
+</PageLayout>

@@ -16,6 +16,7 @@ import type { BlogPost } from 'types/blog';
 import UmamiPVSpan from '@/components/umami/UmamiPVSpan';
 import { MAX_WIDTH } from '@/constants/layout';
 import { getLocaleFromUrl, localizedPath, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import HeroImage from './HeroImage.astro';
 import SakuraPetals from './SakuraPetals.astro';
 import WaveSvg from './wave';
@@ -38,6 +39,7 @@ const isDraft = import.meta.env.DEV && draft === true;
 const bannerLqipStyle = compact ? undefined : getLqipStyle('/img/site_header_1920.webp');
 
 const locale = getLocaleFromUrl(Astro.url.pathname);
+const siteCopy = getContentSite(locale);
 
 const href = data && localizedPath(routeBuilder(Routes.Post, data), locale);
 
@@ -136,11 +138,18 @@ const copyFailedLabel = t(locale, 'common.copyFailed');
         </>
       ) : (
         <>
-          <h2 class="motion-rise shadow-text font-chill-round text-5xl/[1.2]">{siteConfig?.alternate}</h2>
-          <h1 class="motion-rise shadow-text font-chill-round mt-3 text-5xl/[1.2] font-bold tracking-widest" style="--i: 1">
-            {siteConfig?.title}
+          <h1 class="motion-rise shadow-text font-chill-round text-center text-5xl/[1.2] font-bold tracking-wide text-balance">
+            {siteCopy?.title ?? siteConfig.title}
           </h1>
-          <p class="motion-rise shadow-text mt-5 text-sm tracking-[0.2em]" style="--i: 2">= {siteConfig?.subtitle} =</p>
+          <p
+            class:list={[
+              'motion-rise shadow-text mt-5 max-w-2xl text-center text-sm leading-relaxed text-balance',
+              locale === 'zh' ? 'tracking-[0.2em]' : 'tracking-normal',
+            ]}
+            style="--i: 1"
+          >
+            {siteCopy?.subtitle ?? siteConfig.subtitle}
+          </p>
         </>
       )
     }

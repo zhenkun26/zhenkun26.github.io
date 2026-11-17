@@ -6,6 +6,7 @@
 #
 # Structure:
 #   <locale>:
+#     site:          { title?, subtitle?, description? }
 #     categories:    { <slug>: <translated name> }
 #     series:        { <slug>: { label?, fullName?, description? } }
 #     featuredCategories: { <link>: { label?, description? } }
@@ -13,6 +14,10 @@
 # =============================================================================
 
 en:
+  site:
+    title: yuran blog
+    subtitle: "Where joy prevails, the record endures; where peace abides, the way unfolds."
+    description: "Yuzheng's personal blog about learning, technology, and everyday life."
   categories:
     life: Life
     note: Notes

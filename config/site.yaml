@@ -13,7 +13,7 @@
 site:
   title: 豫然录 # 网站名称
   alternate: yuran # 网站英文名称 用于页脚、Logo、@ handle 等
-  subtitle: 雷出地奋，豫然成录 # 网站副标题
+  subtitle: 豫然成录，安以行。 # 网站副标题
   name: 裕政 # 作者名称 - 请修改为你的名字
   description: 裕政的个人博客，记录学习、技术与生活 # 网站描述（占位，待改）
   avatar: /img/avatar-pink-braids.png # 网站头像

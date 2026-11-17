@@ -7,6 +7,7 @@ import { MenuIcon } from '@components/ui/MenuIcon';
 import { MAX_WIDTH } from '@constants/layout';
 import { christmasConfig, siteConfig } from 'constants/site-config';
 import { getLocaleFromUrl, localizedPath } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import Navigator from './Navigator';
 
 interface Props {
@@ -15,8 +16,9 @@ interface Props {
 }
 
 const { isPostPage = false, tocNumbering = true } = Astro.props;
-const { alternate, title, showLogo } = siteConfig;
+const { title, showLogo } = siteConfig;
 const locale = getLocaleFromUrl(Astro.url.pathname);
+const logoText = getContentSite(locale)?.title ?? title;
 ---
 
 <div
@@ -28,14 +30,13 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
     <div class="header-content tablet:grid tablet:grid-cols-[minmax(3rem,1fr)_auto_1fr] tablet:gap-x-3 flex items-center justify-between">
       <!-- Desktop: Always show logo -->
       <a
-        transition:persist="page-header-avatar"
         class="site-logo tablet:hidden -my-4 mr-4 flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap"
-        href="/"
+        href={localizedPath('/', locale)}
         target="_self"
-        title={alternate || title}
-        aria-label={alternate || title}
+        title={logoText}
+        aria-label={logoText}
       >
-        {showLogo ? <img src={logoSrc} alt="" class="h-8 w-auto" width="448" height="153" /> : <p class="logo-text">{alternate || title}</p>}
+        {showLogo ? <img src={logoSrc} alt="" class="h-8 w-auto" width="448" height="153" /> : <p class="logo-text">{logoText}</p>}
       </a>
       <!-- Mobile: MobilePostHeader (shows heading on post pages, logo otherwise) -->
       <div class="tablet:col-start-2 tablet:flex hidden items-center justify-center">
@@ -45,13 +46,13 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
             isPostPage={isPostPage}
             enableNumbering={tocNumbering}
             logoElement={showLogo ? 'svg' : 'text'}
-            logoText={alternate || title}
+            logoText={logoText}
             logoSrc={logoSrc}
             locale={locale}
           />
         ) : (
           <a href={localizedPath('/', locale)} class="flex items-center gap-1">
-            {showLogo ? <img src={logoSrc} alt={alternate || title} class="h-8 w-auto" width="448" height="153" /> : <span class="logo-text">{alternate || title}</span>}
+            {showLogo ? <img src={logoSrc} alt={logoText} class="h-8 w-auto" width="448" height="153" /> : <span class="logo-text">{logoText}</span>}
           </a>
         )}
       </div>

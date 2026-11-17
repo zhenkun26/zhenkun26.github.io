@@ -16,6 +16,11 @@ export interface FeaturedCategoryContentTranslation {
 }
 
 export interface LocaleContentTranslations {
+  site?: {
+    title?: string;
+    subtitle?: string;
+    description?: string;
+  };
   colophon?: ColophonContentTranslation;
   categories?: Record<string, string>;
   series?: Record<string, SeriesContentTranslation>;

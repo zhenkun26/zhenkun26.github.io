@@ -3,12 +3,15 @@ import CustomContent from '@components/common/CustomContent.astro';
 import HomeSider from '@components/layout/HomeSider.astro';
 import Cover from '@components/ui/cover/Cover.astro';
 import { CONTENT_PADDING } from '@constants/layout';
-import { seoConfig } from '@constants/site-config';
+import { siteConfig } from '@constants/site-config';
 import { Comment } from '@/components/comment';
+import { getLocaleFromUrl } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 import Layout from './Layout.astro';
 import TwoColumnLayout from './TwoColumnLayout.astro';
 
 export interface Props {
+  locale?: string;
   frontmatter: {
     title: string;
     description?: string;
@@ -17,11 +20,12 @@ export interface Props {
   };
 }
 
-const { frontmatter } = Astro.props;
+const { frontmatter, locale = getLocaleFromUrl(Astro.url.pathname) } = Astro.props;
+const siteTitle = getContentSite(locale)?.title ?? siteConfig.title;
 const showComments = frontmatter.comments ?? true;
 ---
 
-<Layout title={`${frontmatter.title} | ${seoConfig.title}`}>
+<Layout locale={locale} title={`${frontmatter.title} | ${siteTitle}`} description={frontmatter.description}>
   <TwoColumnLayout>
     <Cover slot="cover" title={frontmatter.coverTitle ?? frontmatter.title} />
     <HomeSider slot="sider" />

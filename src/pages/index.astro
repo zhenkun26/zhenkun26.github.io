@@ -13,6 +13,7 @@ import type { BlogPost } from 'types/blog';
 import CategoryCards from '@/components/post/CategoryCards.astro';
 import Divider from '@/components/ui/divider';
 import { defaultLocale, localizedPath, t } from '@/i18n';
+import { getContentSite } from '@/i18n/content';
 
 interface Props {
   locale?: string;
@@ -20,6 +21,7 @@ interface Props {
 
 // Root pages render the default locale; `[lang]/` mirrors pass their locale in explicitly.
 const { locale = defaultLocale } = Astro.props;
+const siteCopy = getContentSite(locale);
 
 // 使用优化的单次查询获取所有首页数据
 const { highlightedPosts, stickyPosts: normalStickyPosts, regularPosts } = await getHomePagePosts(locale);
@@ -54,7 +56,7 @@ const page: Page<BlogPost> = {
 };
 ---
 
-<Layout locale={locale} title={seoConfig.title}>
+<Layout locale={locale} title={siteCopy?.title ?? siteConfig.title} description={siteCopy?.description ?? seoConfig.description}>
   <TwoColumnLayout>
     <Cover slot="cover" />
     <HomeSider slot="sider" />

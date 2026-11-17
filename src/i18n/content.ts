@@ -12,6 +12,11 @@ import type { I18nContentConfig } from './content-types';
 
 const config = i18nContent as I18nContentConfig;
 
+/** Site copy overrides; callers fall back to the default site configuration. */
+export function getContentSite(locale: string) {
+  return config[locale]?.site;
+}
+
 /**
  * Look up a translated category name from the YAML content config.
  * Returns undefined if no translation is defined for the given locale/slug.
